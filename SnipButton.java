@@ -81,9 +81,9 @@ public class SnipButton extends Button {
             tempGC.clearRect(0, 0, ImageCanvas.getWidth(), ImageCanvas.getHeight());
             endXCut = t.getX();
             endYCut = t.getY();
-            tempGC.setStroke(Tools.getCurrentColor());
+            tempGC.setStroke(Color.BKACK);
             tempGC.setLineDashes(2);
-            tempGC.setLineWidth(Tools.getDrawWidth());//Takes type double as its argument
+            tempGC.setLineWidth(2);//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             tempGC.strokeRect(Math.min(startXCut, endXCut), Math.min(startYCut, endYCut), Math.abs(startXCut-endXCut), Math.abs(startYCut-endYCut));
 
