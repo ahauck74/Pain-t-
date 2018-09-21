@@ -1,0 +1,33 @@
+Pain(t) Release Notes
+
+Week 1: 9/7/18
+  * Added a file dropdown bar in the menubar with options open, save, an 
+  * Added the ability to save the file. If the file does not already have a specified file path, a save as will be performed instead
+  * Added the ability to save as
+  * Added buttons for home and view in the menubar, these don't do anything yet
+  Issues
+  * When opening a file, the window does not scale to the file size
+
+
+Week 2: 9/14/18
+  * The window now defaults to maximized upon opening with centered images
+  * Added the ability to choose colors from a color picker which implements tool tips on hover
+  * The user can now draw lines with the selected color that will be preview before being created
+  * Added a prompt to save any unsaved work when closing or opening
+  * Reworked and simplified the saving methods in FileBar.java
+  * Added keyboard shortcuts to the File options
+
+TODO:
+  * Make GUIs for unsaved work prompts cleaner
+  * Choose a different exit condition for the line drawing environment. Currently 
+    it exits the environment after the first line is drawn such that in order to draw
+    a second line the line button must be clicked again
+  * Combine exit attempt and open new file attempt methods into one. Current implementation
+    if inefficient
+
+Week 3: 9/21/18
+  * Added buttons to draw rectangles and //circles
+  * Line environment now ends when a new draw environment is entered
+
+TODO: 
+  
