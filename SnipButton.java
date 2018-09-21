@@ -27,17 +27,17 @@ public class SnipButton extends Button {
     private static GraphicsContext gc;
     private static Canvas tempCanvas;
     private static GraphicsContext tempGC;
-    private static double startXCut, startYCut;
+    private static double startXCut, startYCut; // Initially used for the mouse press
+                                                // coordinates. Then is overwritten
+                                                // by endXCut, endYCut if they are the upper
+                                                // left corner.
     private static double endXCut, endYCut;
-    private static double widthCut, heightCut;
-    private static double startX;
-    private static double startY;
-    private static double endX;
-    private static double endY;
+    private static double widthCut, heightCut; //width and height of the cut
+    private static double endX, endY; //Location for placing the snip
     
     private static int[] pixels;
     private static PixelWriter pixelWriter;
-    private static PixelWriter tempPixelWriter;
+    private static PixelWriter tempPixelWriter; //Used for previewing
     
     private static WritablePixelFormat<IntBuffer>  format;
     
@@ -50,7 +50,7 @@ public class SnipButton extends Button {
     public void getCut() {
         myCanvas = ImageCanvas.getCanvas();
         gc = myCanvas.getGraphicsContext2D();
-
+        //First the user is prompted to make a cut with the following mouse actions
         myCanvas.setOnMousePressed(canvasMousePressedHandlerCut);
         myCanvas.setOnMouseDragged(canvasMouseDraggedHandlerCut);
         myCanvas.setOnMouseReleased(canvasMouseReleasedHandlerCut);
@@ -96,6 +96,8 @@ public class SnipButton extends Button {
 
         @Override
         public void handle(MouseEvent t) {
+            
+            //Once the mouse is released the pixels in the cut range are obtained
             endXCut = t.getX();
             endYCut = t.getY();
             gc.setStroke(Tools.getCurrentColor());
@@ -103,7 +105,7 @@ public class SnipButton extends Button {
             //gc.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             widthCut = Math.abs(startXCut-endXCut);
             heightCut = Math.abs(startYCut-endYCut);
-            startXCut = Math.min(startXCut, endXCut);
+            startXCut = Math.min(startXCut, endXCut); //Finds the upper left corner
             startYCut = Math.min(startYCut, endYCut);
             myCanvas.toFront();
             Image img = ImageCanvas.getImage();
@@ -117,9 +119,8 @@ public class SnipButton extends Button {
             
             
 
-            //ImageCanvas.updateCanvas(gc);
-
-            //Paint.removeLayer(tempCanvas);
+            //After the cut pixels are stored, mouse actions are changed to
+            //press, drag, and release the newly cut pixels
             myCanvas.setOnMousePressed(canvasMousePressedHandlerDrag);
             myCanvas.setOnMouseDragged(canvasMouseDraggedHandlerDrag);
             myCanvas.setOnMouseReleased(canvasMouseReleasedHandlerDrag);
@@ -138,8 +139,6 @@ public class SnipButton extends Button {
         @Override
         public void handle(MouseEvent t) {
             ImageCanvas.prepareUndo();
-            startX = t.getX();
-            startY = t.getY();
             tempCanvas = new Canvas(ImageCanvas.getWidth(), ImageCanvas.getHeight());
             tempGC = tempCanvas.getGraphicsContext2D(); 
             tempPixelWriter = tempGC.getPixelWriter();
@@ -176,8 +175,6 @@ public class SnipButton extends Button {
             endY = t.getY();
             gc.setStroke(Color.WHITE);
             gc.setFill(Color.WHITE);
-            //Takes type double as its argument
-            //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             
             gc.fillRect((int) startXCut, (int) startYCut, (int) widthCut, (int) heightCut);
             pixelWriter.setPixels((int) endX, (int) endY, (int) widthCut, (int) heightCut, format, pixels, 0, (int) widthCut);

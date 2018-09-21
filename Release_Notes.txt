@@ -33,6 +33,6 @@ Week 3: 9/21/18
   * Added snipping tool
 
 TODO: 
-  * There is no image object stored when the default canvas is initialized
   * Leave cut outline for the snip before the cut is dragged
   * Create a separate color for fills
+  * Create listener for the esc to exit any drawing environment
