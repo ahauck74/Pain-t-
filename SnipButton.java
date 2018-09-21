@@ -106,7 +106,7 @@ public class SnipButton extends Button {
             startXCut = Math.min(startXCut, endXCut);
             startYCut = Math.min(startYCut, endYCut);
             myCanvas.toFront();
-            Image img = FileBar.getImage();
+            Image img = ImageCanvas.getImage();
             PixelReader reader = img.getPixelReader();
             format = WritablePixelFormat.getIntArgbInstance();
             pixels = new int[(int) widthCut * (int) heightCut];
@@ -161,8 +161,8 @@ public class SnipButton extends Button {
             tempGC.setFill(Color.WHITE);
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             tempGC.fillRect((int) startXCut, (int) startYCut, (int) widthCut, (int) heightCut);
-            tempPixelWriter.setPixels((int) Math.min(startX, endX), (int) Math.min(startY, endY), (int) widthCut, (int) heightCut, format, pixels, 0, (int) widthCut);
-
+            tempPixelWriter.setPixels((int) endX, (int) endY, (int) widthCut, (int) heightCut, format, pixels, 0, (int) widthCut);
+            
             
         }
     };
@@ -180,7 +180,7 @@ public class SnipButton extends Button {
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             
             gc.fillRect((int) startXCut, (int) startYCut, (int) widthCut, (int) heightCut);
-            pixelWriter.setPixels((int) Math.min(startX, endX), (int) Math.min(startY, endY), (int) widthCut, (int) heightCut, format, pixels, 0, (int) widthCut);
+            pixelWriter.setPixels((int) endX, (int) endY, (int) widthCut, (int) heightCut, format, pixels, 0, (int) widthCut);
             
             myCanvas.toFront();
 
