@@ -40,6 +40,8 @@ public class ImageCanvas {
     }
     
     public static Canvas newCanvas(Image image) {
+        undoStack = new Stack();
+        redoStack = new Stack();
         height = image.getHeight();
         width = image.getWidth();
         myCanvas = new Canvas(width, height);
