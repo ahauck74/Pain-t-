@@ -4,14 +4,11 @@
  */
 package paint;
 
-import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 
 /**
@@ -27,6 +24,9 @@ public class Tools extends ToolBar {
 
     static private ComboBox<String> widthPicker;
     static private double drawWidth;
+    
+    static private CheckBox setFill;
+    
 
     public Tools() {
         String style = "-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 8px; -fx-border-color: rgba(1, 1, 1, 0.7);";
@@ -38,6 +38,7 @@ public class Tools extends ToolBar {
         CircleButton circleButton = new CircleButton();
         RectangleButton rectangleButton = new RectangleButton();
         SnipButton snipButton = new SnipButton();
+        setFill = new CheckBox("Fill Shapes");
         
         colorPicker = new ColorPicker(Color.BLACK);
         colorPicker.setTooltip(new Tooltip("This color"));
@@ -52,8 +53,10 @@ public class Tools extends ToolBar {
         widthPicker.getItems().addAll("1", "2", "4", "8", "12", "16", "20", "28", "36", "48", "64");
         widthPicker.setPromptText("Line Width");
         widthPicker.setOnAction(e -> pickWidth());
+        
+          
 
-        this.getItems().addAll(lineButton,circleButton, rectangleButton, drawButton, snipButton, colorPicker,  widthPicker);
+        this.getItems().addAll(lineButton,circleButton, rectangleButton, setFill, drawButton, snipButton, colorPicker,  widthPicker);
 
     }
 
@@ -76,5 +79,9 @@ public class Tools extends ToolBar {
     public static void setColor(Color c) {
         currentColor = c;
         //colorPicker.setColor(c);
+    }
+    
+    public static Boolean fillShape() {
+        return setFill.isSelected();
     }
 }
