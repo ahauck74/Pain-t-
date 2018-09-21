@@ -27,7 +27,6 @@ public class RectangleButton extends Button {
 
     public RectangleButton() {
         this.setText("_Rectangle");
-
         this.setOnAction(e -> this.drawLine());
     }
 
@@ -66,9 +65,12 @@ public class RectangleButton extends Button {
             endX = t.getX();
             endY = t.getY();
             tempGC.setStroke(Tools.getCurrentColor());
+            tempGC.setFill(Tools.getCurrentColor());
             tempGC.setLineWidth(Tools.getDrawWidth());//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             tempGC.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            tempGC.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            
 
             
         }
@@ -82,8 +84,12 @@ public class RectangleButton extends Button {
             endX = t.getX();
             endY = t.getY();
             gc.setStroke(Tools.getCurrentColor());
+            gc.setFill(Tools.getCurrentColor());
             gc.setLineWidth(Tools.getDrawWidth());
             gc.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            
+            gc.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            
             myCanvas.toFront();
 
             ImageCanvas.updateCanvas(gc);

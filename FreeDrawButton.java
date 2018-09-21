@@ -19,13 +19,13 @@ import javafx.scene.shape.Path;
  *
  * @author ahauc
  */
-public class FreeDraw extends Button {
+public class FreeDrawButton extends Button {
 
     private static Canvas myCanvas;
     private static GraphicsContext gc;
 
 
-    public FreeDraw() {
+    public FreeDrawButton() {
 
         this.setText("_Draw");
         this.setOnAction(e -> enterDrawEnvironment());
@@ -69,6 +69,7 @@ public class FreeDraw extends Button {
                 gc.lineTo(mouseEvent.getX(), mouseEvent.getY());
                 gc.stroke();
                 gc.closePath();
+                ImageCanvas.updateCanvas(gc);
             }
 
         }

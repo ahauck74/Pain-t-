@@ -33,10 +33,11 @@ public class Tools extends ToolBar {
         this.setStyle(style);
         currentColor = Color.BLACK;
 
-        Line lineButton = new Line();
-        FreeDraw drawButton = new FreeDraw();
+        LineButton lineButton = new LineButton();
+        FreeDrawButton drawButton = new FreeDrawButton();
         CircleButton circleButton = new CircleButton();
         RectangleButton rectangleButton = new RectangleButton();
+        SnipButton snipButton = new SnipButton();
         
         colorPicker = new ColorPicker(Color.BLACK);
         colorPicker.setTooltip(new Tooltip("This color"));
@@ -52,7 +53,7 @@ public class Tools extends ToolBar {
         widthPicker.setPromptText("Line Width");
         widthPicker.setOnAction(e -> pickWidth());
 
-        this.getItems().addAll(lineButton,circleButton, rectangleButton, drawButton, colorPicker,  widthPicker);
+        this.getItems().addAll(lineButton,circleButton, rectangleButton, drawButton, snipButton, colorPicker,  widthPicker);
 
     }
 

@@ -116,7 +116,7 @@ public class FileBar extends Menu {
             throw new RuntimeException(e);
         }
     }
-    
+   
     public static void newBlank() {
         Canvas myCanvas = ImageCanvas.defaultCanvas();
         imagePane.getChildren().clear();

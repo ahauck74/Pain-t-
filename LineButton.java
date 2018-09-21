@@ -1,5 +1,5 @@
 /*
- * This class handles the action events of the Line button on the tool bar.
+ * This class handles the action events of the LineButton button on the tool bar.
  */
 package paint;
 
@@ -13,7 +13,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author ahauc
  */
-public class Line extends Button {
+public class LineButton extends Button {
 
     private static Canvas myCanvas;
     private static GraphicsContext gc;
@@ -24,7 +24,7 @@ public class Line extends Button {
     private static double endX;
     private static double endY;
 
-    public Line() {
+    public LineButton() {
         this.setText("_Line");
 
         this.setOnAction(e -> this.drawLine());

@@ -21,13 +21,18 @@ TODO:
   * Make GUIs for unsaved work prompts cleaner
   * Choose a different exit condition for the line drawing environment. Currently 
     it exits the environment after the first line is drawn such that in order to draw
-    a second line the line button must be clicked again
+    a second line the line button must be clicked again (FIXED 9/21/18)
   * Combine exit attempt and open new file attempt methods into one. Current implementation
     if inefficient
 
 Week 3: 9/21/18
-  * Added buttons to draw rectangles and //circles
+  * Added buttons to draw rectangles and circles
   * Line environment now ends when a new draw environment is entered
+  * Added fully implemented undo and redo buttons in the file bar
+  * Added code to github
+  * Added snipping tool
 
 TODO: 
-  
+  * There is no image object stored when the default canvas is initialized
+  * Leave cut outline for the snip before the cut is dragged
+  * Create a separate color for fills

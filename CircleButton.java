@@ -67,9 +67,13 @@ public class CircleButton extends Button{
             endY = t.getY();
             
             tempGC.setStroke(Tools.getCurrentColor());
+            tempGC.setFill(Tools.getCurrentColor());
+            
             tempGC.setLineWidth(Tools.getDrawWidth());//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             tempGC.strokeOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            tempGC.fillOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            
 
             
         }
@@ -83,8 +87,12 @@ public class CircleButton extends Button{
             endX = t.getX();
             endY = t.getY();
             gc.setStroke(Tools.getCurrentColor());
+            gc.setFill(Tools.getCurrentColor());
+            
             gc.setLineWidth(Tools.getDrawWidth());
             gc.strokeOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            gc.fillOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            
             myCanvas.toFront();
 
             ImageCanvas.updateCanvas(gc);
