@@ -48,7 +48,7 @@ public class ColorMatcher extends Button{
         @Override
         public void handle(MouseEvent t) {
             
-            PixelReader pixelReader = (FileBar.getImage()).getPixelReader();
+            PixelReader pixelReader = (ImageCanvas.getImage()).getPixelReader();
             Color newColor = pixelReader.getColor((int)Math.round(t.getX()), (int)Math.round(t.getY()));
             Tools.setColor(newColor);
             
