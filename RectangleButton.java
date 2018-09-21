@@ -65,13 +65,14 @@ public class RectangleButton extends Button {
             endX = t.getX();
             endY = t.getY();
             tempGC.setStroke(Tools.getCurrentColor());
-            tempGC.setFill(Tools.getCurrentColor());
+            tempGC.setFill(Tools.getCurrentFillColor());
             tempGC.setLineWidth(Tools.getDrawWidth());//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
-            tempGC.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             if (Tools.fillShape()) {
                 tempGC.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             }
+            tempGC.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            
 
             
         }
@@ -85,12 +86,13 @@ public class RectangleButton extends Button {
             endX = t.getX();
             endY = t.getY();
             gc.setStroke(Tools.getCurrentColor());
-            gc.setFill(Tools.getCurrentColor());
+            gc.setFill(Tools.getCurrentFillColor());
             gc.setLineWidth(Tools.getDrawWidth());
-            gc.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             if (Tools.fillShape()) {
                 gc.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             }
+            gc.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
+            
             myCanvas.toFront();
 
             ImageCanvas.updateCanvas(gc);

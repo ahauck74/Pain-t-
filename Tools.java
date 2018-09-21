@@ -20,6 +20,10 @@ public class Tools extends ToolBar {
     static private ColorPicker colorPicker; //The current color is a color button. It contains a Color object as an instance variable
     static private Color currentColor;
     
+    static private ColorPicker colorFillPicker; //The current color is a color button. It contains a Color object as an instance variable
+    static private Color currentFillColor;
+    
+    
     static private ColorMatcher colorMatcher;
 
     static private ComboBox<String> widthPicker;
@@ -41,8 +45,12 @@ public class Tools extends ToolBar {
         setFill = new CheckBox("Fill Shapes");
         
         colorPicker = new ColorPicker(Color.BLACK);
-        colorPicker.setTooltip(new Tooltip("This color"));
+        colorPicker.setTooltip(new Tooltip("Stroke color"));
         colorPicker.setOnAction(e -> pickColor());
+        
+        colorFillPicker = new ColorPicker(Color.BLACK);
+        colorFillPicker.setTooltip(new Tooltip("Fill color"));
+        colorFillPicker.setOnAction(e -> pickFillColor());
         
         colorMatcher = new ColorMatcher();//Doesn't work yet
         
@@ -56,13 +64,18 @@ public class Tools extends ToolBar {
         
           
 
-        this.getItems().addAll(lineButton,circleButton, rectangleButton, setFill, drawButton, snipButton, colorPicker,  widthPicker);
+        this.getItems().addAll(lineButton,circleButton, rectangleButton, setFill, drawButton, snipButton, colorPicker, colorFillPicker, widthPicker);
 
     }
 
     private static void pickColor() {
         currentColor = colorPicker.getValue();
     }
+    
+    private static void pickFillColor() {
+        currentFillColor = colorFillPicker.getValue();
+    }
+    
 
     private static void pickWidth() {
         drawWidth =  Double.parseDouble(widthPicker.getValue());
@@ -71,6 +84,10 @@ public class Tools extends ToolBar {
     public static Color getCurrentColor() {
         return currentColor;
     }
+    
+    public static Color getCurrentFillColor() {
+        return currentFillColor;
+    }
     //The GraphicsContext setLineWidth() takes in a double
     public static double getDrawWidth() {
         return drawWidth;
@@ -78,6 +95,11 @@ public class Tools extends ToolBar {
     
     public static void setColor(Color c) {
         currentColor = c;
+        //colorPicker.setColor(c);
+    }
+    
+    public static void setFillColor(Color c) {
+        currentFillColor = c;
         //colorPicker.setColor(c);
     }
     
