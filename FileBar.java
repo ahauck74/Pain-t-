@@ -31,7 +31,6 @@ public class FileBar extends Menu {
 
     private static Pane imagePane;
     private static Stage stage;
-    private static Image image;
     private static File file;
     private static FileChooser fileChooser;
 
@@ -105,9 +104,7 @@ public class FileBar extends Menu {
     }
 
     public static void saveFile(File file) {
-        Canvas myCanvas = ImageCanvas.getCanvas();
-        WritableImage wImage = myCanvas.snapshot(null, null);
-
+        WritableImage wImage = ImageCanvas.getWImage();
         BufferedImage bImage = SwingFXUtils.fromFXImage(wImage, null);
         try {
             ImageIO.write(bImage, "png", file);
@@ -127,15 +124,12 @@ public class FileBar extends Menu {
         //Use a different file variable when opening to avoid defaulting to 
         //overwriting the original file.
         File openFile = fileChooser.showOpenDialog(null);
-        image = new Image(openFile.toURI().toString());
+        Image image = new Image(openFile.toURI().toString());
         Canvas myCanvas = ImageCanvas.newCanvas(image);
         imagePane.getChildren().clear();
         imagePane.getChildren().add(myCanvas);
     }
 
-    public static Image getImage() {
-        return image;
-    }
 
     public static Boolean isNotSaved() {
         return (file == null);
