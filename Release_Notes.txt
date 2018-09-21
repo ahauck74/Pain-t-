@@ -26,7 +26,8 @@ TODO:
     if inefficient
 
 Week 3: 9/21/18
-  * Added buttons to draw rectangles and circles
+  * Added buttons to draw rectangles and circles with optional fill
+  * Added a separate color for fill
   * Line environment now ends when a new draw environment is entered
   * Added fully implemented undo and redo buttons in the file bar
   * Added code to github
@@ -34,5 +35,6 @@ Week 3: 9/21/18
 
 TODO: 
   * Leave cut outline for the snip before the cut is dragged
-  * Create a separate color for fills
   * Create listener for the esc to exit any drawing environment
+  * Clean/organize the toolbar
+  * Fix undo to release changes haven't been made when reverting to original canvas
