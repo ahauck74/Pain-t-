@@ -35,7 +35,7 @@ public class ImageCanvas {
     public static Canvas defaultCanvas() {
         undoStack = new Stack();
         redoStack = new Stack();
-        ImageCanvas.height = 600;
+        ImageCanvas.height = 600;//TODO: Add user input for these values
         ImageCanvas.width = 1200;
         myCanvas = new Canvas(width, height);
         gc = myCanvas.getGraphicsContext2D();
@@ -121,6 +121,10 @@ public class ImageCanvas {
         prepareRedo(); //Adds the current canvas to the top of the redo stack before
                        //replacing it with the old canvas
         gc.drawImage((Image) undoStack.pop(), 0, 0, width, height);
+        if (undoStack.empty()) { 
+            discardUnsavedProgress();
+        }
+        
         
     }
     
@@ -128,6 +132,7 @@ public class ImageCanvas {
         if (redoStack.empty()) { return; }
         prepareUndo();
         gc.drawImage((Image) redoStack.pop(), 0, 0, width, height);
+        updateCanvas(gc);
         
     }
     
