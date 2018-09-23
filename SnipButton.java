@@ -5,9 +5,9 @@
  */
 package paint;
 
-import static java.lang.String.format;
 import java.nio.IntBuffer;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -82,8 +82,8 @@ public class SnipButton extends Button {
             endXCut = t.getX();
             endYCut = t.getY();
             tempGC.setStroke(Color.BLACK);
-            tempGC.setLineDashes(2);
-            tempGC.setLineWidth(2);//Takes type double as its argument
+            tempGC.setLineDashes(5);
+            tempGC.setLineWidth(1);//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             tempGC.strokeRect(Math.min(startXCut, endXCut), Math.min(startYCut, endYCut), Math.abs(startXCut-endXCut), Math.abs(startYCut-endYCut));
 
@@ -100,30 +100,19 @@ public class SnipButton extends Button {
             //Once the mouse is released the pixels in the cut range are obtained
             endXCut = t.getX();
             endYCut = t.getY();
-            gc.setStroke(Tools.getCurrentColor());
-            gc.setLineWidth(Tools.getDrawWidth());
-            //gc.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             widthCut = Math.abs(startXCut-endXCut);
             heightCut = Math.abs(startYCut-endYCut);
             startXCut = Math.min(startXCut, endXCut); //Finds the upper left corner
             startYCut = Math.min(startYCut, endYCut);
-            myCanvas.toFront();
-            Image img = ImageCanvas.getImage();
-            PixelReader reader = img.getPixelReader();
-            format = WritablePixelFormat.getIntArgbInstance();
-            pixels = new int[(int) widthCut * (int) heightCut];
-            reader.getPixels((int) startXCut, (int) startYCut, (int) widthCut, (int) heightCut, format, pixels, 0, (int) widthCut);
-            
-            pixelWriter = gc.getPixelWriter();
             
             
             
 
             //After the cut pixels are stored, mouse actions are changed to
             //press, drag, and release the newly cut pixels
-            myCanvas.setOnMousePressed(canvasMousePressedHandlerDrag);
-            myCanvas.setOnMouseDragged(canvasMouseDraggedHandlerDrag);
-            myCanvas.setOnMouseReleased(canvasMouseReleasedHandlerDrag);
+            tempCanvas.setOnMousePressed(canvasMousePressedHandlerDrag);
+            tempCanvas.setOnMouseDragged(canvasMouseDraggedHandlerDrag);
+            tempCanvas.setOnMouseReleased(canvasMouseReleasedHandlerDrag);
 
         }
     };
@@ -139,6 +128,15 @@ public class SnipButton extends Button {
         @Override
         public void handle(MouseEvent t) {
             ImageCanvas.prepareUndo();
+            
+            myCanvas.toFront();
+            Image img = ImageCanvas.getImage();
+            PixelReader reader = img.getPixelReader();
+            format = WritablePixelFormat.getIntArgbInstance();
+            pixels = new int[(int) widthCut * (int) heightCut];
+            reader.getPixels((int) startXCut, (int) startYCut, (int) widthCut, (int) heightCut, format, pixels, 0, (int) widthCut);
+            pixelWriter = gc.getPixelWriter();
+            
             tempCanvas = new Canvas(ImageCanvas.getWidth(), ImageCanvas.getHeight());
             tempGC = tempCanvas.getGraphicsContext2D(); 
             tempPixelWriter = tempGC.getPixelWriter();
