@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class handles the file bar as well as saving and opening new images
  */
 package paint;
 
@@ -38,19 +36,22 @@ public class FileBar extends Menu {
         this.setText("File");
         FileBar.imagePane = pane;
         MenuItem makeNew = new MenuItem("_New");
+        MenuItem newLayer = new MenuItem("New Layer");
+        
         MenuItem open = new MenuItem("_Open");
         MenuItem save = new MenuItem("_Save");
         MenuItem saveAs = new MenuItem("Save As");
         MenuItem undo = new MenuItem("Undo");
         MenuItem redo = new MenuItem("Redo");
         
-        this.getItems().addAll(makeNew, open, save, saveAs, undo, redo);
+        this.getItems().addAll(makeNew, newLayer, open, save, saveAs, undo, redo);
         
         
         
         //Keyboard shortcuts
         
         makeNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
+        newLayer.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
         save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         saveAs.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
@@ -61,11 +62,12 @@ public class FileBar extends Menu {
         FileBar.stage = stage;
 
         makeNew.setOnAction(e -> Paint.attemptOpenNew(true)); //This checks for unsaved progress before opening a new canvas
+        newLayer.setOnAction(e -> LayerOrganizer.makeNewLayer());
         save.setOnAction(e -> saveToFile());
         saveAs.setOnAction(e -> saveAs());
         open.setOnAction(e -> Paint.attemptOpenNew(false));
-        undo.setOnAction(e -> ImageCanvas.undo());
-        redo.setOnAction(e -> ImageCanvas.redo());
+        undo.setOnAction(e -> Layer.undo());
+        redo.setOnAction(e -> Layer.redo());
         
         fileChooser = new FileChooser();
 
@@ -104,20 +106,22 @@ public class FileBar extends Menu {
     }
 
     public static void saveFile(File file) {
-        WritableImage wImage = ImageCanvas.getWImage();
+        WritableImage wImage = Layer.getWImage();
         BufferedImage bImage = SwingFXUtils.fromFXImage(wImage, null);
         try {
             ImageIO.write(bImage, "png", file);
-            ImageCanvas.savedProgress();
+            Layer.setUpToDate();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
    
     public static void newBlank() {
-        Canvas myCanvas = ImageCanvas.defaultCanvas();
+        Layer myCanvas = new Layer();
+        LayerOrganizer.removeLayers();
+        LayerOrganizer.addLayer(myCanvas);
         imagePane.getChildren().clear();
-        imagePane.getChildren().add(myCanvas);
+        imagePane.getChildren().add(Layer.getCurrentCanvas());
     }
     
     public static void openFile() {
@@ -125,9 +129,11 @@ public class FileBar extends Menu {
         //overwriting the original file.
         File openFile = fileChooser.showOpenDialog(null);
         Image image = new Image(openFile.toURI().toString());
-        Canvas myCanvas = ImageCanvas.newCanvas(image);
+        Layer myCanvas = new Layer(image);
+        LayerOrganizer.removeLayers();
+        LayerOrganizer.addLayer(myCanvas);
         imagePane.getChildren().clear();
-        imagePane.getChildren().add(myCanvas);
+        imagePane.getChildren().add(Layer.getCurrentCanvas());
     }
 
 

@@ -31,7 +31,7 @@ public class LineButton extends Button {
     }
 
     public void drawLine() {
-        myCanvas = ImageCanvas.getCanvas();
+        myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
 
         myCanvas.setOnMousePressed(canvasMousePressedHandler);
@@ -45,12 +45,11 @@ public class LineButton extends Button {
 
         @Override
         public void handle(MouseEvent t) {
-            ImageCanvas.prepareUndo();
+            Layer.prepareUndo();
             startX = t.getX();
             startY = t.getY();
-            tempCanvas = new Canvas(ImageCanvas.getWidth(), ImageCanvas.getHeight());
+            tempCanvas = new Canvas(Layer.getCanvasWidth(), Layer.getCanvasHeight());
             tempGC = tempCanvas.getGraphicsContext2D(); 
-            Paint.addLayer(tempCanvas); 
         }
 
     };
@@ -61,7 +60,7 @@ public class LineButton extends Button {
         @Override
         public void handle(MouseEvent t) {
             //Clears the temporary canvas of any preview lines before drawing the next one
-            tempGC.clearRect(0, 0, ImageCanvas.getWidth(), ImageCanvas.getHeight());
+            tempGC.clearRect(0, 0, Layer.getCanvasWidth(), Layer.getCanvasHeight());
             endX = t.getX();
             endY = t.getY();
             tempGC.setStroke(Tools.getCurrentColor());
@@ -83,13 +82,12 @@ public class LineButton extends Button {
             gc.strokeLine(startX, startY, endX, endY);
             myCanvas.toFront();
             
-            //Updates ImageCanvas version of the canvas with the new one that 
+            //Updates Layer version of the canvas with the new one that 
             //has a freshly drawn line
-            ImageCanvas.updateCanvas(gc);
+            Layer.updateCanvas(gc);
             //myCanvas.setOnMousePressed(null);
             //myCanvas.setOnMouseDragged(null);
             //myCanvas.setOnMouseReleased(null);
-            Paint.removeLayer(tempCanvas);
             //myCanvas.requestFocus();
 
         }

@@ -1,6 +1,8 @@
 
 package paint;
 
+import java.util.Collection;
+import java.util.Iterator;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -11,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -39,16 +43,24 @@ public class Paint extends Application {
         Tools toolBar = new Tools();
         topContainer.getChildren().addAll(mainMenu, toolBar);
         imagePane = new StackPane();
-        Canvas blank = ImageCanvas.defaultCanvas(); //Creates a blank white canvas
+        
+        
         FileBar fileDrpDwn = new FileBar(imagePane, primaryStage);
         Menu homeBtn = new Menu("Home");
         Menu viewBtn = new Menu("View");
         mainMenu.getMenus().addAll(fileDrpDwn, homeBtn, viewBtn);
+        
+        ScrollPane layerBar = new ScrollPane();
+        layerBar.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+        LayerOrganizer container = new LayerOrganizer(5.0, 10.0);
+        Layer blank = new Layer(); //Creates a blank white canvas
+        
+        layerBar.setContent(container);
 
-        imagePane.getChildren().add(blank);
-        imagePane.setAlignment(blank, Pos.CENTER);
+        imagePane.setAlignment(Layer.getCurrentCanvas(), Pos.CENTER);
         root.setTop(topContainer);
         root.setCenter(imagePane);
+        root.setRight(layerBar);
 
         Scene scene = new Scene(root);
         root.requestFocus(); //This makes it so no button is highlighted upon opening the program
@@ -88,7 +100,7 @@ public class Paint extends Application {
         // and isNotSaved returns true when a save file hasn't been created yet.
         // This prevents the program from closing when exiting the save dialog after 
         // choosing to save changes.
-        if ((ImageCanvas.hasUnsavedProgress() || FileBar.isNotSaved()) && !(!ImageCanvas.hasUnsavedProgress() && FileBar.isNotSaved())) {
+        if ((Layer.hasUnsavedProgress() || FileBar.isNotSaved()) && !(!Layer.hasUnsavedProgress() && FileBar.isNotSaved())) {
 
             BorderPane warningPane = new BorderPane();
             HBox buttons = new HBox();
@@ -125,22 +137,32 @@ public class Paint extends Application {
 
     //This add a temporary canvas for previewing shapes while dragging
     //It could potentially be useful for an undo feature in the future
-    public static void addLayer(Canvas newLayer) {
-        imagePane.getChildren().add(0, newLayer);
-        newLayer.toFront();
+    public static void addCanvas(Canvas newLayerCanvas) {
+        imagePane.getChildren().add(0, newLayerCanvas);
+        newLayerCanvas.toFront();
+    }
+    
+    
+    public static void addCanvases(Collection layers) {
 
     }
     
-    public static void removeLayer(Canvas oldLayer) {
-        imagePane.getChildren().remove(oldLayer);
+    public static void removeAllCanvases() {
+        imagePane.getChildren().clear();
     }
+    
+    public static void removeCanvas(Canvas oldLayerCanvas) {
+        imagePane.getChildren().remove(oldLayerCanvas);
+    }
+    
+    
 
     public static void attemptOpenNew(Boolean blankCanvas) {
         // hasUnsavedProgress checks if the canvas has been changed since the last save
         // and isNotSaved returns true when a save file hasn't been created yet.
         // This prevents the program from closing when exiting the save dialog after 
         // choosing to save changes.
-        if ((ImageCanvas.hasUnsavedProgress() || FileBar.isNotSaved()) && !(!ImageCanvas.hasUnsavedProgress() && FileBar.isNotSaved())) {
+        if ((Layer.hasUnsavedProgress() || FileBar.isNotSaved()) && !(!Layer.hasUnsavedProgress() && FileBar.isNotSaved())) {
 
             BorderPane warningPane = new BorderPane();
             HBox buttons = new HBox();

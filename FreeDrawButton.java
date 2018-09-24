@@ -34,7 +34,7 @@ public class FreeDrawButton extends Button {
     
     private void enterDrawEnvironment() {
         
-        myCanvas = ImageCanvas.getCanvas();
+        myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
         
         myCanvas.setOnMouseClicked(mouseHandler);
@@ -51,9 +51,7 @@ public class FreeDrawButton extends Button {
         @Override
         public void handle(MouseEvent mouseEvent) {
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                ImageCanvas.prepareUndo();
-                myCanvas = ImageCanvas.getCanvas();
-                gc = myCanvas.getGraphicsContext2D();
+                Layer.prepareUndo();
                 gc.beginPath();
                 gc.moveTo(mouseEvent.getX(), mouseEvent.getY());
                 gc.setStroke(Tools.getCurrentColor());
@@ -63,13 +61,12 @@ public class FreeDrawButton extends Button {
                 gc.lineTo(mouseEvent.getX(), mouseEvent.getY());
                 gc.moveTo(mouseEvent.getX(), mouseEvent.getY());
                 gc.stroke();
-                //path.getElements()
-                //      .add(new LineTo(mouseEvent.getX(), mouseEvent.getY()));
+
             } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
                 gc.lineTo(mouseEvent.getX(), mouseEvent.getY());
                 gc.stroke();
                 gc.closePath();
-                ImageCanvas.updateCanvas(gc);
+                Layer.updateCanvas(gc);
             }
 
         }

@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 public class CircleButton extends Button{
     private static Canvas myCanvas;
     private static GraphicsContext gc;
+    private static Layer tempImageCanvas;
     private static Canvas tempCanvas;
     private static GraphicsContext tempGC;
     private static double startX;
@@ -32,7 +33,7 @@ public class CircleButton extends Button{
     }
 
     public void drawCircle() {
-        myCanvas = ImageCanvas.getCanvas();
+        myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
 
         myCanvas.setOnMousePressed(canvasMousePressedHandler);
@@ -46,12 +47,12 @@ public class CircleButton extends Button{
 
         @Override
         public void handle(MouseEvent t) {
-            ImageCanvas.prepareUndo();
+            Layer.prepareUndo();
             startX = t.getX();
             startY = t.getY();
-            tempCanvas = new Canvas(ImageCanvas.getWidth(), ImageCanvas.getHeight());
+            tempImageCanvas = new Layer(true);
+            tempCanvas = tempImageCanvas.getCanvas();
             tempGC = tempCanvas.getGraphicsContext2D(); 
-            Paint.addLayer(tempCanvas); 
         }
 
     };
@@ -62,7 +63,7 @@ public class CircleButton extends Button{
         @Override
         public void handle(MouseEvent t) {
             //Clears the temporary canvas of any preview lines before drawing the next one
-            tempGC.clearRect(0, 0, ImageCanvas.getWidth(), ImageCanvas.getHeight());
+            tempGC.clearRect(0, 0, Layer.getCanvasWidth(), Layer.getCanvasHeight());
             endX = t.getX();
             endY = t.getY();
             
@@ -97,11 +98,10 @@ public class CircleButton extends Button{
             }
             gc.strokeOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             
-            myCanvas.toFront();
+            LayerOrganizer.removeTempLayer(tempImageCanvas);
 
-            ImageCanvas.updateCanvas(gc);
+            Layer.updateCanvas(gc);
 
-            Paint.removeLayer(tempCanvas);
 
         }
     };

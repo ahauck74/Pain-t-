@@ -34,7 +34,18 @@ Week 3: 9/21/18
   * Added snipping tool
 
 TODO: 
-  * Leave cut outline for the snip before the cut is dragged
+  * Leave cut outline for the snip before the cut is dragged (FIXED 9/23/18)
   * Create listener for the esc to exit any drawing environment
   * Clean/organize the toolbar
-  * Fix undo to release changes haven't been made when reverting to original canvas
+  * Fix undo to release changes haven't been made when reverting to original canvas (FIXED 9/23/18)
+  * Add user input for size of new canvas
+
+
+Week 4: Canvas Layers?
+    Known Issues
+        * Snipping pixel reader does not differentiate between white and transparent
+        * Reverting to a lower layer needs to temporarily remove higher layers 
+          from the stack pane
+        * Adding a new layer while in the draw environment doesn't move the draw 
+          environment to the new layer
+        * 

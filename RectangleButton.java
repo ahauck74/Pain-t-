@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 public class RectangleButton extends Button {
     private static Canvas myCanvas;
     private static GraphicsContext gc;
+    private static Layer tempImageCanvas;
     private static Canvas tempCanvas;
     private static GraphicsContext tempGC;
     private static double startX;
@@ -31,7 +32,7 @@ public class RectangleButton extends Button {
     }
 
     public void drawLine() {
-        myCanvas = ImageCanvas.getCanvas();
+        myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
 
         myCanvas.setOnMousePressed(canvasMousePressedHandler);
@@ -45,12 +46,12 @@ public class RectangleButton extends Button {
 
         @Override
         public void handle(MouseEvent t) {
-            ImageCanvas.prepareUndo();
+            Layer.prepareUndo();
             startX = t.getX();
             startY = t.getY();
-            tempCanvas = new Canvas(ImageCanvas.getWidth(), ImageCanvas.getHeight());
+            tempImageCanvas = new Layer(true);
+            tempCanvas = tempImageCanvas.getCanvas();
             tempGC = tempCanvas.getGraphicsContext2D(); 
-            Paint.addLayer(tempCanvas); 
         }
 
     };
@@ -61,7 +62,7 @@ public class RectangleButton extends Button {
         @Override
         public void handle(MouseEvent t) {
             //Clears the temporary canvas of any preview lines before drawing the next one
-            tempGC.clearRect(0, 0, ImageCanvas.getWidth(), ImageCanvas.getHeight());
+            tempGC.clearRect(0, 0, Layer.getCanvasWidth(), Layer.getCanvasHeight());
             endX = t.getX();
             endY = t.getY();
             tempGC.setStroke(Tools.getCurrentColor());
@@ -93,11 +94,10 @@ public class RectangleButton extends Button {
             }
             gc.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             
-            myCanvas.toFront();
+            //Removing the temporary layer leaves the currentCanvas in the front
+            LayerOrganizer.removeTempLayer(tempImageCanvas);
+            Layer.updateCanvas(gc);
 
-            ImageCanvas.updateCanvas(gc);
-
-            Paint.removeLayer(tempCanvas);
 
         }
     };

@@ -22,9 +22,6 @@ public class Tools extends ToolBar {
     
     static private ColorPicker colorFillPicker; //The current color is a color button. It contains a Color object as an instance variable
     static private Color currentFillColor;
-    
-    
-    static private ColorMatcher colorMatcher;
 
     static private ComboBox<String> widthPicker;
     static private double drawWidth;
@@ -52,7 +49,6 @@ public class Tools extends ToolBar {
         colorFillPicker.setTooltip(new Tooltip("Fill color"));
         colorFillPicker.setOnAction(e -> pickFillColor());
         
-        colorMatcher = new ColorMatcher();//Doesn't work yet
         
         
 
