@@ -61,11 +61,11 @@ public class FileBar extends Menu {
         
         FileBar.stage = stage;
 
-        makeNew.setOnAction(e -> Paint.attemptOpenNew(true)); //This checks for unsaved progress before opening a new canvas
+        makeNew.setOnAction(e -> Paint.attemptClose(true)); //This checks for unsaved progress before opening a new canvas
         newLayer.setOnAction(e -> LayerOrganizer.makeNewLayer());
         save.setOnAction(e -> saveToFile());
         saveAs.setOnAction(e -> saveAs());
-        open.setOnAction(e -> Paint.attemptOpenNew(false));
+        open.setOnAction(e -> Paint.attemptClose(false));
         undo.setOnAction(e -> Layer.undo());
         redo.setOnAction(e -> Layer.redo());
         
@@ -128,6 +128,9 @@ public class FileBar extends Menu {
         //Use a different file variable when opening to avoid defaulting to 
         //overwriting the original file.
         File openFile = fileChooser.showOpenDialog(null);
+        if (openFile == null) {
+            return;
+        }
         Image image = new Image(openFile.toURI().toString());
         Layer myCanvas = new Layer(image);
         LayerOrganizer.removeLayers();

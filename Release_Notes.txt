@@ -23,7 +23,7 @@ TODO:
     it exits the environment after the first line is drawn such that in order to draw
     a second line the line button must be clicked again (FIXED 9/21/18)
   * Combine exit attempt and open new file attempt methods into one. Current implementation
-    if inefficient
+    if inefficient (FIXED 9/25/18)
 
 Week 3: 9/21/18
   * Added buttons to draw rectangles and circles with optional fill
@@ -43,9 +43,6 @@ TODO:
 
 Week 4: Canvas Layers?
     Known Issues
-        * Snipping pixel reader does not differentiate between white and transparent
-        * Reverting to a lower layer needs to temporarily remove higher layers 
-          from the stack pane
         * Adding a new layer while in the draw environment doesn't move the draw 
           environment to the new layer
         * 

@@ -1,4 +1,3 @@
-
 package paint;
 
 import java.util.Collection;
@@ -43,19 +42,14 @@ public class Paint extends Application {
         Tools toolBar = new Tools();
         topContainer.getChildren().addAll(mainMenu, toolBar);
         imagePane = new StackPane();
-        
-        
+
         FileBar fileDrpDwn = new FileBar(imagePane, primaryStage);
         Menu homeBtn = new Menu("Home");
         Menu viewBtn = new Menu("View");
         mainMenu.getMenus().addAll(fileDrpDwn, homeBtn, viewBtn);
-        
-        ScrollPane layerBar = new ScrollPane();
-        layerBar.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-        LayerOrganizer container = new LayerOrganizer(5.0, 10.0);
+
+        LayerOrganizer layerBar = new LayerOrganizer();
         Layer blank = new Layer(); //Creates a blank white canvas
-        
-        layerBar.setContent(container);
 
         imagePane.setAlignment(Layer.getCurrentCanvas(), Pos.CENTER);
         root.setTop(topContainer);
@@ -72,7 +66,7 @@ public class Paint extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent c) {
-                attemptClose();
+                attemptClose(null);
                 c.consume();
             }
         });
@@ -84,18 +78,29 @@ public class Paint extends Application {
         unsavedWorkPrompt.close();
         //attemptClose(primaryStage);
     }
+    
+    private static void dontSave(Stage unsavedWorkPrompt, Boolean makeNew) {
+        unsavedWorkPrompt.close();
+        noSave(makeNew);
+    }
+    
+    private static void noSave(Boolean makeNew) {
+        if (makeNew == null) {
+            System.out.println("Closing: " + makeNew);
+            Platform.exit();
+        } else if (makeNew) {
+            FileBar.newBlank();
+        } else {
+            FileBar.openFile();
+        }
 
-    private static void close(Stage unsavedWorkPrompt) {
-        primaryStage.hide();
-        unsavedWorkPrompt.hide();
-        Platform.exit();
     }
 
     private static void cancel(Stage unsavedWorkPrompt) {
         unsavedWorkPrompt.close();
     }
 
-    public static void attemptClose() {
+    public static void attemptClose(Boolean makeNew) {//null for close, true for new canvas, false for open image
         // hasUnsavedProgress checks if the canvas has been changed since the last save
         // and isNotSaved returns true when a save file hasn't been created yet.
         // This prevents the program from closing when exiting the save dialog after 
@@ -121,7 +126,7 @@ public class Paint extends Application {
             newWindow.setScene(secondScene);
 
             saveChanges.setOnAction(e -> saveAndClose(newWindow));
-            close.setOnAction(e -> close(newWindow));
+            close.setOnAction(e -> dontSave(newWindow, makeNew));
             cancel.setOnAction(e -> cancel(newWindow));
 
             // Set position of second window, related to primary window.
@@ -131,7 +136,7 @@ public class Paint extends Application {
             newWindow.show();
 
         } else {
-            Platform.exit();
+            noSave(makeNew);
         }
     }
 
@@ -141,77 +146,26 @@ public class Paint extends Application {
         imagePane.getChildren().add(0, newLayerCanvas);
         newLayerCanvas.toFront();
     }
-    
-    
+
     public static void addCanvases(Collection layers) {
 
     }
-    
+
     public static void removeAllCanvases() {
         imagePane.getChildren().clear();
     }
-    
+
     public static void removeCanvas(Canvas oldLayerCanvas) {
         imagePane.getChildren().remove(oldLayerCanvas);
     }
-    
-    
 
-    public static void attemptOpenNew(Boolean blankCanvas) {
-        // hasUnsavedProgress checks if the canvas has been changed since the last save
-        // and isNotSaved returns true when a save file hasn't been created yet.
-        // This prevents the program from closing when exiting the save dialog after 
-        // choosing to save changes.
-        if ((Layer.hasUnsavedProgress() || FileBar.isNotSaved()) && !(!Layer.hasUnsavedProgress() && FileBar.isNotSaved())) {
-
-            BorderPane warningPane = new BorderPane();
-            HBox buttons = new HBox();
-            Label warningMessage = new Label("Do you want to save your progress?");
-            warningPane.setTop(warningMessage);
-            Button saveChanges = new Button("Save");
-            Button openAnyway = new Button("Don't Save");
-            Button cancel = new Button("Cancel");
-
-            buttons.getChildren().addAll(saveChanges, openAnyway, cancel);
-            warningPane.setCenter(buttons);
-
-            Scene secondScene = new Scene(warningPane, 250, 100);
-
-            // New window (Stage)
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Warning: Unsaved Changes");
-            newWindow.setScene(secondScene);
-
-            saveChanges.setOnAction(e -> saveAndClose(newWindow));
-            openAnyway.setOnAction(e -> openAnyway(newWindow, blankCanvas));
-            
-            cancel.setOnAction(e -> cancel(newWindow));
-
-            // Set position of second window, related to primary window.
-            newWindow.setX(primaryStage.getX() + 200);
-            newWindow.setY(primaryStage.getY() + 100);
-
-            newWindow.show();
-
-        } else {
-            if (blankCanvas) {
-                FileBar.newBlank();
-            } else {
-                FileBar.openFile();
-            }
-
-        }
-    }
-    
     private static void openAnyway(Stage unsavedWorkPrompt, Boolean blankCanvas) {
         if (blankCanvas) {
-                FileBar.newBlank();
-            } else {
-                FileBar.openFile();
-            }
+            FileBar.newBlank();
+        } else {
+            FileBar.openFile();
+        }
         unsavedWorkPrompt.hide();
     }
-    
-    
 
 }
