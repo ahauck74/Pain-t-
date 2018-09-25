@@ -5,77 +5,80 @@
  */
 package paint;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
 
 /**
  *
  * @author ahauc
  */
-public class LayerOrganizer extends FlowPane {
+public class LayerOrganizer extends ListView{
 
-    private static LayerOrganizer flowPane;
-    private static ArrayList<Layer> layers;
+    private static ListView listView;
+    private static final ObservableList layers = 
+        FXCollections.observableArrayList();
 
-    public LayerOrganizer(double hGap, double vGap) {
-        this.setHgap(hGap);
-        this.setVgap(vGap);
-
-        this.setPrefWrapLength(200);
-        layers = new ArrayList();
-        flowPane = this;
+    public LayerOrganizer() {
+        this.setEditable(true);
+        this.setOrientation(Orientation.VERTICAL);
+        this.setPrefWidth(238);
+        this.setPrefHeight(70);
+        listView = this;
+        listView.setItems(layers);
+         
     }
 
     public static void removeLayers() {
         layers.removeAll(layers);
-        flowPane.getChildren().clear();
+        listView.setItems(layers);
         Paint.removeAllCanvases();
-        
+
     }
-    
+
     public static void removeLayer(Layer layer) {
-        flowPane.getChildren().remove(layer);
-        layers.remove(layer); 
+        layers.remove(layer);
+        listView.setItems(layers);
         Paint.removeCanvas(layer.getCanvas());
-        
+
     }
+
     public static void addTempLayer(Layer layer) {
         Paint.addCanvas(layer.getCanvas());
     }
-    
+
     public static void removeTempLayer(Layer layer) {
         Paint.removeCanvas(layer.getCanvas());
     }
-    
+
     public static void addLayer(Layer layer) {
         layers.add(layer);
         layer.setText(Double.toString(layer.getLayerOrder()));
         Paint.addCanvas(layer.getCanvas());
-        
         layer.setMinWidth(200);
-
+        reorder();
+        listView.setItems(layers);
         layer.setOnMouseClicked(new EventHandler<MouseEvent>() {
- 
+
             @Override
             public void handle(MouseEvent event) {
                 MouseButton button = event.getButton();
-                if(button==MouseButton.PRIMARY){
+                if (button == MouseButton.PRIMARY) {
                     layer.setCurrentLayer();
                     Double rank = layer.getLayerOrder();
                     hideUpperLayers(rank);
-                    
-                }else if(button==MouseButton.SECONDARY){
-                    
+
+                } else if (button == MouseButton.SECONDARY) {
+
                 }
             }
         });
-
-        reorder();
     }
 
     public static void makeNewLayer() {
@@ -83,16 +86,15 @@ public class LayerOrganizer extends FlowPane {
     }
 
     private void layerAction() {
-        
+
     }
-    
+
     public static void reorder() {
-        flowPane.getChildren().clear();
         Collections.sort(layers);
-        flowPane.getChildren().addAll(layers);
+        listView.setItems(layers);
         Paint.addCanvases(layers);
     }
-    
+
     //This method hides all the layers higher than the given rank to bring
     //a lower layer to the front
     private static void hideUpperLayers(double rank) {
@@ -101,15 +103,13 @@ public class LayerOrganizer extends FlowPane {
         Paint.removeAllCanvases();
         //Then add the layers lower than or equal to rank back
         Iterator layerIterator = layers.iterator();
-        while(layerIterator.hasNext()) {
+        while (layerIterator.hasNext()) {
             Layer layer = ((Layer) layerIterator.next());
             double layerRank = layer.getLayerOrder();
-            System.out.println("This rank: " + layerRank);
-            if (layerRank <= rank) {    
+            if (layerRank <= rank) {
                 Paint.addCanvas(layer.getCanvas());
             }
         }
-        
     }
 
 }
