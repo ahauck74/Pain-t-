@@ -6,9 +6,12 @@ package paint;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -17,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -37,19 +41,16 @@ public class FileBar extends Menu {
         FileBar.imagePane = pane;
         MenuItem makeNew = new MenuItem("_New");
         MenuItem newLayer = new MenuItem("New Layer");
-        
+
         MenuItem open = new MenuItem("_Open");
         MenuItem save = new MenuItem("_Save");
         MenuItem saveAs = new MenuItem("Save As");
         MenuItem undo = new MenuItem("Undo");
         MenuItem redo = new MenuItem("Redo");
-        
+
         this.getItems().addAll(makeNew, newLayer, open, save, saveAs, undo, redo);
-        
-        
-        
+
         //Keyboard shortcuts
-        
         makeNew.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN));
         newLayer.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         open.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
@@ -57,8 +58,7 @@ public class FileBar extends Menu {
         saveAs.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         undo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
         redo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
-        
-        
+
         FileBar.stage = stage;
 
         makeNew.setOnAction(e -> Paint.attemptClose(true)); //This checks for unsaved progress before opening a new canvas
@@ -68,7 +68,7 @@ public class FileBar extends Menu {
         open.setOnAction(e -> Paint.attemptClose(false));
         undo.setOnAction(e -> Layer.undo());
         redo.setOnAction(e -> Layer.redo());
-        
+
         fileChooser = new FileChooser();
 
         //Set extension filter
@@ -84,8 +84,6 @@ public class FileBar extends Menu {
                 .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
     }
 
-    
-
     //Sets filepath to null so that when saving, it prompts for a new filepath
     public static void saveAs() {
         file = null;
@@ -99,14 +97,24 @@ public class FileBar extends Menu {
         if (file == null) {
             file = fileChooser.showSaveDialog(stage); //Returns null if the dialog is closed without saving
         }
+        saveFile(file);
 
-        if (file != null) {
-            saveFile(file);
-        }
     }
 
     public static void saveFile(File file) {
-        WritableImage wImage = Layer.getWImage();
+        Canvas saveCanvas = new Canvas(Layer.getCanvasWidth(), Layer.getCanvasHeight());
+        GraphicsContext saveGC = saveCanvas.getGraphicsContext2D();
+        ObservableList layers = LayerOrganizer.getLayers();
+        Iterator layerIterator = layers.iterator();
+        SnapshotParameters sp = new SnapshotParameters();
+        sp.setFill(Color.TRANSPARENT);
+        while (layerIterator.hasNext()) {
+            Layer layer = ((Layer) layerIterator.next());
+            Image image = layer.getCanvas().snapshot(sp, null);
+            saveGC.drawImage(image, 0, 0);
+
+        }
+        WritableImage wImage = saveCanvas.snapshot(sp, null);
         BufferedImage bImage = SwingFXUtils.fromFXImage(wImage, null);
         try {
             ImageIO.write(bImage, "png", file);
@@ -115,7 +123,7 @@ public class FileBar extends Menu {
             throw new RuntimeException(e);
         }
     }
-   
+
     public static void newBlank() {
         Layer myCanvas = new Layer();
         LayerOrganizer.removeLayers();
@@ -123,7 +131,7 @@ public class FileBar extends Menu {
         imagePane.getChildren().clear();
         imagePane.getChildren().add(Layer.getCurrentCanvas());
     }
-    
+
     public static void openFile() {
         //Use a different file variable when opening to avoid defaulting to 
         //overwriting the original file.
@@ -139,11 +147,8 @@ public class FileBar extends Menu {
         imagePane.getChildren().add(Layer.getCurrentCanvas());
     }
 
-
     public static Boolean isNotSaved() {
         return (file == null);
     }
-    
-    
 
 }

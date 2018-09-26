@@ -34,6 +34,10 @@ public class LayerOrganizer extends ListView{
         listView.setItems(layers);
          
     }
+    
+    public static ObservableList getLayers() {
+        return layers;
+    }
 
     public static void removeLayers() {
         layers.removeAll(layers);
@@ -59,7 +63,7 @@ public class LayerOrganizer extends ListView{
 
     public static void addLayer(Layer layer) {
         layers.add(layer);
-        layer.setText(Double.toString(layer.getLayerOrder()));
+        layer.setText("Layer " + Double.toString(layer.getLayerOrder()));
         Paint.addCanvas(layer.getCanvas());
         layer.setMinWidth(200);
         reorder();
@@ -98,7 +102,6 @@ public class LayerOrganizer extends ListView{
     //This method hides all the layers higher than the given rank to bring
     //a lower layer to the front
     private static void hideUpperLayers(double rank) {
-        System.out.println("Set rank: " + rank);
         //First remove all layers from the stackPane
         Paint.removeAllCanvases();
         //Then add the layers lower than or equal to rank back

@@ -40,6 +40,10 @@ public class Layer extends Button implements Comparable {
         return layerOrder;
     }
     
+    public static int getNumLayers() {
+        return numLayers;
+    }
+    
     public static double getCurrentLayerOrder() {
         return myCurrentLayer.layerOrder;
     }
