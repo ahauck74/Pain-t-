@@ -44,9 +44,7 @@ public class Paint extends Application {
         imagePane = new StackPane();
 
         FileBar fileDrpDwn = new FileBar(imagePane, primaryStage);
-        Menu homeBtn = new Menu("Home");
-        Menu viewBtn = new Menu("View");
-        mainMenu.getMenus().addAll(fileDrpDwn, homeBtn, viewBtn);
+        mainMenu.getMenus().addAll(fileDrpDwn);
 
         LayerOrganizer layerBar = new LayerOrganizer();
         Layer blank = new Layer(); //Creates a blank white canvas

@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -43,7 +44,10 @@ public class SnipButton extends Button {
     private static WritablePixelFormat<IntBuffer> format;
 
     public SnipButton() {
-        this.setText("Snip");
+        ImageView scissorsImage = new ImageView("resources/scissors.png");
+        scissorsImage.setFitHeight(30);
+        scissorsImage.setFitWidth(30);
+        setGraphic(scissorsImage);
         this.setOnAction(e -> this.getCut());
     }
 
