@@ -11,6 +11,7 @@
 package paint;
 
 import java.util.Stack;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -35,6 +36,7 @@ public class Layer extends Button implements Comparable {
     private double layerOrder;
     private Stack undoStack;
     private Stack redoStack;
+    private static SnapshotParameters sp;
 
     public double getLayerOrder() {
         return layerOrder;
@@ -183,12 +185,16 @@ public class Layer extends Button implements Comparable {
     //in addition to updateCanvas() 
     //Uundo features are static since they apply to the current canvas
     public static void prepareUndo() {
-        myCurrentLayer.undoStack.push(myCurrentLayer.myCanvas.snapshot(null, null));
+        sp = new SnapshotParameters();
+        sp.setFill(Color.TRANSPARENT);
+        myCurrentLayer.undoStack.push(myCurrentLayer.myCanvas.snapshot(sp, null));
         //prevImage = Layer.myCanvas.snapshot(null, null);
     }
 
     public static void prepareRedo() {
-        myCurrentLayer.redoStack.push(myCurrentLayer.myCanvas.snapshot(null, null));
+        SnapshotParameters sp = new SnapshotParameters();
+        sp.setFill(Color.TRANSPARENT);
+        myCurrentLayer.redoStack.push(myCurrentLayer.myCanvas.snapshot(sp, null));
     }
 
     public static void undo() {
@@ -197,6 +203,12 @@ public class Layer extends Button implements Comparable {
         }
         prepareRedo(); //Adds the current canvas to the top of the redo stack before
         //replacing it with the old canvas
+        if (myCurrentLayer.layerOrder == 0) { //This if-else is necessary to handle transparency issues
+            myCurrentLayer.gc.setFill(Color.WHITE);
+            myCurrentLayer.gc.fillRect(0,0, width, height);
+        } else {
+            myCurrentLayer.gc.clearRect(0,0, width, height);
+        }
         myCurrentLayer.gc.drawImage((Image) myCurrentLayer.undoStack.pop(), 0, 0, width, height);
         if (myCurrentLayer.undoStack.empty()) {
             setUpToDate();
@@ -209,8 +221,14 @@ public class Layer extends Button implements Comparable {
             return;
         }
         prepareUndo();
+        if (myCurrentLayer.layerOrder == 0) { //This if-else is necessary to handle transparency issues
+            myCurrentLayer.gc.setFill(Color.WHITE);
+            myCurrentLayer.gc.fillRect(0,0, width, height);
+        } else {
+            myCurrentLayer.gc.clearRect(0,0, width, height);
+        }
         myCurrentLayer.gc.drawImage((Image) myCurrentLayer.redoStack.pop(), 0, 0, width, height);
-        updateCanvas(myCurrentLayer.gc);
+        updateCanvas(myCurrentLayer.gc); 
 
     }
     //For sorting the layers by their rank
@@ -220,6 +238,16 @@ public class Layer extends Button implements Comparable {
         /* For Ascending order*/
         return (int) (this.layerOrder - otherOrder);
 
+    }
+    
+    public static void exitDrawEnvironment() {
+        myCurrentLayer.getCanvas().setOnMouseClicked(null);
+        myCurrentLayer.getCanvas().setOnMouseDragged(null);
+        myCurrentLayer.getCanvas().setOnMouseEntered(null);
+        myCurrentLayer.getCanvas().setOnMouseExited(null);
+        myCurrentLayer.getCanvas().setOnMouseMoved(null);
+        myCurrentLayer.getCanvas().setOnMousePressed(null);
+        myCurrentLayer.getCanvas().setOnMouseReleased(null);
     }
 
 }
