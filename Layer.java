@@ -69,8 +69,10 @@ public class Layer extends Button implements Comparable {
     public Layer(Image image) {
         undoStack = new Stack();
         redoStack = new Stack();
-        height = image.getHeight();
-        width = image.getWidth();
+        double[] size = resize(image);
+        width = size[0];
+        height= size[1];
+        
         myCanvas = new Canvas(width, height);
 
         gc = myCanvas.getGraphicsContext2D();
@@ -80,6 +82,32 @@ public class Layer extends Button implements Comparable {
         numLayers = 1;
         LayerOrganizer.addLayer(this);
         this.setCurrentLayer();
+    }
+    
+    private static double[] resize(Image img) {
+        double maxWidth = 1920;
+        double maxHeight = 720;
+        double imgHeight = img.getHeight();
+        double imgWidth = img.getWidth();
+        double imgToFrameHeight = imgHeight/maxHeight;
+        double imgToFrameWidth = imgWidth/maxWidth;
+        if (imgToFrameHeight > 1 || imgToFrameWidth > 1) {
+            if (imgToFrameHeight > imgToFrameWidth) {
+                imgWidth = (imgWidth/imgHeight)*maxHeight;
+                imgHeight = maxHeight;
+            } else {
+                System.out.println(imgWidth);
+                System.out.println(imgHeight);
+                System.out.println(maxHeight);
+                
+                imgHeight = (imgWidth/imgHeight)*maxWidth;
+                imgWidth = maxWidth;
+            }
+            
+            
+        }
+        double[] size = {imgWidth, imgHeight};
+        return size;
     }
 
     //This constructor is used for adding additional layers
@@ -109,7 +137,7 @@ public class Layer extends Button implements Comparable {
         return myCurrentLayer.myCanvas;
     }
     
-    public static GraphicsContext getContext() {
+    public static GraphicsContext getCurrentContext() {
         return myCurrentLayer.gc;
     }
 
@@ -125,11 +153,11 @@ public class Layer extends Button implements Comparable {
         return myCanvas;
     }
 
-    //TODO: Make this snapshot all layers?
+    
     public static Image getImage() {
         return myCurrentLayer.myCanvas.snapshot(null, null);
     }
-    //TODO: Make this snapshot all layers?
+    
     public static WritableImage getWImage() {
         return myCurrentLayer.myCanvas.snapshot(null, null);
     }
@@ -192,8 +220,6 @@ public class Layer extends Button implements Comparable {
         /* For Ascending order*/
         return (int) (this.layerOrder - otherOrder);
 
-        /* For Descending order do like this */
-        //return compareage-this.studentage;
     }
 
 }

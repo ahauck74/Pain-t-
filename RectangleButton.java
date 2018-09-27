@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -27,7 +28,10 @@ public class RectangleButton extends Button {
     private static double endY;
 
     public RectangleButton() {
-        this.setText("_Rectangle");
+        ImageView rectangleImage = new ImageView("resources/rectangle.png");
+        rectangleImage.setFitHeight(30);
+        rectangleImage.setFitWidth(30);
+        this.setGraphic(rectangleImage);
         this.setOnAction(e -> this.drawLine());
     }
 

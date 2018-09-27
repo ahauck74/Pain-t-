@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
@@ -26,8 +27,10 @@ public class FreeDrawButton extends Button {
 
 
     public FreeDrawButton() {
-
-        this.setText("_Draw");
+        ImageView rectangleImage = new ImageView("resources/pencil.png");
+        rectangleImage.setFitHeight(30);
+        rectangleImage.setFitWidth(30);
+        this.setGraphic(rectangleImage);
         this.setOnAction(e -> enterDrawEnvironment());
         
     }

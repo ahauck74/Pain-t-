@@ -9,8 +9,9 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import static javafx.scene.input.DataFormat.URL;
 import javafx.scene.paint.Color;
-
 /**
  *
  * @author ahauc
@@ -40,7 +41,7 @@ public class Tools extends ToolBar {
         RectangleButton rectangleButton = new RectangleButton();
         SnipButton snipButton = new SnipButton();
         setFill = new CheckBox("Fill Shapes");
-        
+
         colorPicker = new ColorPicker(Color.BLACK);
         colorPicker.setTooltip(new Tooltip("Stroke color"));
         colorPicker.setOnAction(e -> pickColor());

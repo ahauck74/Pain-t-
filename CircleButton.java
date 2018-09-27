@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -27,8 +28,10 @@ public class CircleButton extends Button{
     private static double endY;
 
     public CircleButton() {
-        this.setText("_Circle");
-
+        ImageView circleImage = new ImageView("resources/circle.png");
+        circleImage.setFitHeight(30);
+        circleImage.setFitWidth(30);
+        this.setGraphic(circleImage);
         this.setOnAction(e -> this.drawCircle());
     }
 

@@ -146,6 +146,8 @@ public class FileBar extends Menu {
         imagePane.getChildren().clear();
         imagePane.getChildren().add(Layer.getCurrentCanvas());
     }
+    
+    
 
     public static Boolean isNotSaved() {
         return (file == null);

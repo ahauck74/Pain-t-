@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -25,8 +26,10 @@ public class LineButton extends Button {
     private static double endY;
 
     public LineButton() {
-        this.setText("_Line");
-
+        ImageView lineImage = new ImageView("resources/line.png");
+        lineImage.setFitHeight(30);
+        lineImage.setFitWidth(30);
+        this.setGraphic(lineImage);
         this.setOnAction(e -> this.drawLine());
     }
 
