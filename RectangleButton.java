@@ -29,8 +29,8 @@ public class RectangleButton extends Button {
 
     public RectangleButton() {
         ImageView rectangleImage = new ImageView("resources/rectangle.png");
-        rectangleImage.setFitHeight(30);
-        rectangleImage.setFitWidth(30);
+        rectangleImage.setFitHeight(20);
+        rectangleImage.setFitWidth(20);
         this.setGraphic(rectangleImage);
         this.setOnAction(e -> this.drawLine());
     }

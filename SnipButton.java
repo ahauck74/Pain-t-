@@ -45,8 +45,8 @@ public class SnipButton extends Button {
 
     public SnipButton() {
         ImageView scissorsImage = new ImageView("resources/scissors.png");
-        scissorsImage.setFitHeight(30);
-        scissorsImage.setFitWidth(30);
+        scissorsImage.setFitHeight(20);
+        scissorsImage.setFitWidth(20);
         setGraphic(scissorsImage);
         this.setOnAction(e -> this.getCut());
     }

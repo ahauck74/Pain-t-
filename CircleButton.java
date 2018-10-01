@@ -29,8 +29,8 @@ public class CircleButton extends Button{
 
     public CircleButton() {
         ImageView circleImage = new ImageView("resources/circle.png");
-        circleImage.setFitHeight(30);
-        circleImage.setFitWidth(30);
+        circleImage.setFitHeight(20);
+        circleImage.setFitWidth(20);
         this.setGraphic(circleImage);
         this.setOnAction(e -> this.drawCircle());
     }

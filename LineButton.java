@@ -27,8 +27,8 @@ public class LineButton extends Button {
 
     public LineButton() {
         ImageView lineImage = new ImageView("resources/line.png");
-        lineImage.setFitHeight(30);
-        lineImage.setFitWidth(30);
+        lineImage.setFitHeight(20);
+        lineImage.setFitWidth(20);
         this.setGraphic(lineImage);
         this.setOnAction(e -> this.drawLine());
     }

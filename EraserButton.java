@@ -1,41 +1,42 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package paint;
 
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 
 /**
  *
  * @author ahauc
  */
-public class FreeDrawButton extends Button {
+public class EraserButton extends Button{
 
     private static Canvas myCanvas;
     private static GraphicsContext gc;
+    private static double width;
 
-
-    public FreeDrawButton() {
-        ImageView rectangleImage = new ImageView("resources/pencil.png");
-        rectangleImage.setFitHeight(20);
-        rectangleImage.setFitWidth(20);
-        this.setGraphic(rectangleImage);
+    public EraserButton() {
+        this.setText("Eraser");
+        //ImageView rectangleImage = new ImageView("resources/pencil.png");
+        //rectangleImage.setFitHeight(20);
+        //rectangleImage.setFitWidth(20);
+        //this.setGraphic(rectangleImage);
         this.setOnAction(e -> enterDrawEnvironment());
-        
+
     }
-    
+
     private void enterDrawEnvironment() {
-        
+
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
-        
+
         myCanvas.setOnMouseClicked(mouseHandler);
         myCanvas.setOnMouseDragged(mouseHandler);
         myCanvas.setOnMouseEntered(mouseHandler);
@@ -53,18 +54,28 @@ public class FreeDrawButton extends Button {
                 Layer.prepareUndo();
                 gc.beginPath();
                 gc.moveTo(mouseEvent.getX(), mouseEvent.getY());
-                gc.setStroke(Tools.getCurrentColor());
-                gc.setLineWidth(Tools.getDrawWidth());
+                gc.setStroke(Color.WHITE);
+                
+                width = (Tools.getDrawWidth());
 
             } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-                gc.lineTo(mouseEvent.getX(), mouseEvent.getY());
-                gc.moveTo(mouseEvent.getX(), mouseEvent.getY());
-                gc.stroke();
-
+                
+                if(Layer.getCurrentLayerOrder() == 0) {
+                     gc.lineTo(mouseEvent.getX(), mouseEvent.getY());
+                    gc.moveTo(mouseEvent.getX(), mouseEvent.getY());
+                    gc.stroke();
+                } else {
+                gc.clearRect(mouseEvent.getX()-0.5*width, mouseEvent.getY() - 0.5*width, width, width);
+                }
             } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_RELEASED) {
-                gc.lineTo(mouseEvent.getX(), mouseEvent.getY());
-                gc.stroke();
-                gc.closePath();
+                if(Layer.getCurrentLayerOrder() == 0) {
+                     gc.lineTo(mouseEvent.getX(), mouseEvent.getY());
+                    gc.moveTo(mouseEvent.getX(), mouseEvent.getY());
+                    gc.stroke();
+                    gc.closePath();
+                } else {
+                gc.clearRect(mouseEvent.getX()-0.5*width, mouseEvent.getY() - 0.5*width, width, width);
+                    }
                 Layer.updateCanvas(gc);
             }
 

@@ -37,6 +37,7 @@ public class Tools extends ToolBar {
 
         LineButton lineButton = new LineButton();
         FreeDrawButton drawButton = new FreeDrawButton();
+        EraserButton eraserButton = new EraserButton();
         CircleButton circleButton = new CircleButton();
         RectangleButton rectangleButton = new RectangleButton();
         SnipButton snipButton = new SnipButton();
@@ -61,7 +62,7 @@ public class Tools extends ToolBar {
         
           
 
-        this.getItems().addAll(lineButton,circleButton, rectangleButton, setFill, drawButton, snipButton, colorPicker, colorFillPicker, widthPicker);
+        this.getItems().addAll(lineButton,circleButton, rectangleButton, setFill, drawButton, eraserButton,  snipButton, colorPicker, colorFillPicker, widthPicker);
 
     }
 
