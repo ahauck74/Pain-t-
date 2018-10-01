@@ -7,6 +7,7 @@ package paint;
 
 import java.nio.IntBuffer;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -56,6 +57,7 @@ public class SnipButton extends Button {
     public void getCut() {
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
+        myCanvas.setCursor(Cursor.DEFAULT);
         //First the user is prompted to make a cut with the following mouse actions
         myCanvas.setOnMousePressed(canvasMousePressedHandlerCut);
         myCanvas.setOnMouseDragged(canvasMouseDraggedHandlerCut);
@@ -115,6 +117,7 @@ public class SnipButton extends Button {
             tempCanvas.setOnMousePressed(canvasMousePressedHandlerDrag);
             tempCanvas.setOnMouseDragged(canvasMouseDraggedHandlerDrag);
             tempCanvas.setOnMouseReleased(canvasMouseReleasedHandlerDrag);
+            tempCanvas.setCursor(Cursor.OPEN_HAND);
 
         }
     };
@@ -128,8 +131,8 @@ public class SnipButton extends Button {
         @Override
         public void handle(MouseEvent t) {
             Layer.prepareUndo();
-
             LayerOrganizer.reorder();
+            tempCanvas.setCursor(Cursor.CLOSED_HAND);
             WritableImage img = Layer.getWImage();
             PixelReader reader = img.getPixelReader();
             

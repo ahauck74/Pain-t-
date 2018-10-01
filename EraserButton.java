@@ -6,6 +6,7 @@
 package paint;
 
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -38,7 +39,7 @@ public class EraserButton extends Button{
         Layer.setDrawEnvironment("erase");
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
-
+        myCanvas.setCursor(Cursor.DEFAULT);
         myCanvas.setOnMouseClicked(mouseHandler);
         myCanvas.setOnMouseDragged(mouseHandler);
         myCanvas.setOnMouseEntered(mouseHandler);

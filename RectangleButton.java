@@ -6,6 +6,7 @@
 package paint;
 
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -41,7 +42,7 @@ public class RectangleButton extends Button {
         Layer.setDrawEnvironment("rectangle");
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
-
+        myCanvas.setCursor(Cursor.DEFAULT);
         myCanvas.setOnMousePressed(canvasMousePressedHandler);
         myCanvas.setOnMouseDragged(canvasMouseDraggedHandler);
         myCanvas.setOnMouseReleased(canvasMouseReleasedHandler);
