@@ -32,10 +32,11 @@ public class CircleButton extends Button{
         circleImage.setFitHeight(20);
         circleImage.setFitWidth(20);
         this.setGraphic(circleImage);
-        this.setOnAction(e -> this.drawCircle());
+        this.setOnAction(e -> this.enterDrawEnvironment());
     }
 
-    public void drawCircle() {
+    public static void enterDrawEnvironment() {
+        Layer.setDrawEnvironment("circle");
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
 
@@ -45,7 +46,7 @@ public class CircleButton extends Button{
 
     }
 
-    EventHandler<MouseEvent> canvasMousePressedHandler
+    static EventHandler<MouseEvent> canvasMousePressedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -60,7 +61,7 @@ public class CircleButton extends Button{
 
     };
 
-    EventHandler<MouseEvent> canvasMouseDraggedHandler
+    static EventHandler<MouseEvent> canvasMouseDraggedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -85,7 +86,7 @@ public class CircleButton extends Button{
         }
     };
 
-    EventHandler<MouseEvent> canvasMouseReleasedHandler
+    static EventHandler<MouseEvent> canvasMouseReleasedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -104,7 +105,6 @@ public class CircleButton extends Button{
             LayerOrganizer.removeTempLayer(tempImageCanvas);
 
             Layer.updateCanvas(gc);
-
 
         }
     };

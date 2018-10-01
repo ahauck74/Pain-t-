@@ -11,12 +11,14 @@
 package paint;
 
 import java.util.Stack;
+import javafx.event.EventHandler;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
@@ -26,6 +28,7 @@ import javafx.scene.paint.Color;
 public class Layer extends Button implements Comparable {
 
     private static Layer myCurrentLayer;
+    private static String drawEnvironment;
     private Canvas myCanvas;
     private GraphicsContext gc;
 
@@ -124,11 +127,37 @@ public class Layer extends Button implements Comparable {
             undoStack = new Stack();
             redoStack = new Stack();
             layerOrder = numLayers;
+            clearHandlers();
             setCurrentLayer();
+            resetMouseHandlers();
             numLayers += 1;
             LayerOrganizer.addLayer(this);
         }
         
+    }
+    
+    public static void resetMouseHandlers() {
+        switch (drawEnvironment) {
+            case "rectangle": 
+                RectangleButton.enterDrawEnvironment();
+                break;
+            case "circle": 
+                CircleButton.enterDrawEnvironment();
+                break;
+            case "line":
+                LineButton.enterDrawEnvironment();
+                break;
+            case "draw": 
+                FreeDrawButton.enterDrawEnvironment();
+                break;
+            case "erase":
+                EraserButton.enterDrawEnvironment();
+                break;
+        }
+    }
+    
+    public static void setDrawEnvironment(String drawEnvironment) {
+        Layer.drawEnvironment = drawEnvironment;
     }
 
     public void setCurrentLayer() {
@@ -240,7 +269,7 @@ public class Layer extends Button implements Comparable {
 
     }
     
-    public static void exitDrawEnvironment() {
+    public static void clearHandlers() {
         myCurrentLayer.getCanvas().setOnMouseClicked(null);
         myCurrentLayer.getCanvas().setOnMouseDragged(null);
         myCurrentLayer.getCanvas().setOnMouseEntered(null);

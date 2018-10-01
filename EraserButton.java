@@ -32,8 +32,8 @@ public class EraserButton extends Button{
 
     }
 
-    private void enterDrawEnvironment() {
-
+    public static void enterDrawEnvironment() {
+        Layer.setDrawEnvironment("erase");
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
 
@@ -46,7 +46,7 @@ public class EraserButton extends Button{
         myCanvas.setOnMouseReleased(mouseHandler);
     }
 
-    EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+    static EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent mouseEvent) {
@@ -55,9 +55,9 @@ public class EraserButton extends Button{
                 gc.beginPath();
                 gc.moveTo(mouseEvent.getX(), mouseEvent.getY());
                 gc.setStroke(Color.WHITE);
-                
                 width = (Tools.getDrawWidth());
-
+                gc.setLineWidth(width);
+                
             } else if (mouseEvent.getEventType() == MouseEvent.MOUSE_DRAGGED) {
                 
                 if(Layer.getCurrentLayerOrder() == 0) {
@@ -77,6 +77,7 @@ public class EraserButton extends Button{
                 gc.clearRect(mouseEvent.getX()-0.5*width, mouseEvent.getY() - 0.5*width, width, width);
                     }
                 Layer.updateCanvas(gc);
+                
             }
 
         }

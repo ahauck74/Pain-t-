@@ -32,10 +32,11 @@ public class RectangleButton extends Button {
         rectangleImage.setFitHeight(20);
         rectangleImage.setFitWidth(20);
         this.setGraphic(rectangleImage);
-        this.setOnAction(e -> this.drawLine());
+        this.setOnAction(e -> this.enterDrawEnvironment());
     }
 
-    public void drawLine() {
+    public static void enterDrawEnvironment() {
+        Layer.setDrawEnvironment("rectangle");
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
 
@@ -45,7 +46,7 @@ public class RectangleButton extends Button {
 
     }
 
-    EventHandler<MouseEvent> canvasMousePressedHandler
+    static EventHandler<MouseEvent> canvasMousePressedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -60,7 +61,7 @@ public class RectangleButton extends Button {
 
     };
 
-    EventHandler<MouseEvent> canvasMouseDraggedHandler
+    static EventHandler<MouseEvent> canvasMouseDraggedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -83,7 +84,7 @@ public class RectangleButton extends Button {
         }
     };
 
-    EventHandler<MouseEvent> canvasMouseReleasedHandler
+    static EventHandler<MouseEvent> canvasMouseReleasedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override

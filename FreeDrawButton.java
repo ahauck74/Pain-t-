@@ -31,8 +31,8 @@ public class FreeDrawButton extends Button {
         
     }
     
-    private void enterDrawEnvironment() {
-        
+    public static void enterDrawEnvironment() {
+        Layer.setDrawEnvironment("draw");
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
         
@@ -45,7 +45,7 @@ public class FreeDrawButton extends Button {
         myCanvas.setOnMouseReleased(mouseHandler);
     }
 
-    EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+    static EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent mouseEvent) {

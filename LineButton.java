@@ -18,6 +18,7 @@ public class LineButton extends Button {
 
     private static Canvas myCanvas;
     private static GraphicsContext gc;
+    private static Layer tempImageCanvas;
     private static Canvas tempCanvas;
     private static GraphicsContext tempGC;
     private static double startX;
@@ -26,14 +27,15 @@ public class LineButton extends Button {
     private static double endY;
 
     public LineButton() {
+        Layer.setDrawEnvironment("line");
         ImageView lineImage = new ImageView("resources/line.png");
         lineImage.setFitHeight(20);
         lineImage.setFitWidth(20);
         this.setGraphic(lineImage);
-        this.setOnAction(e -> this.drawLine());
+        this.setOnAction(e -> this.enterDrawEnvironment());
     }
 
-    public void drawLine() {
+    public static void enterDrawEnvironment() {
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
 
@@ -43,7 +45,7 @@ public class LineButton extends Button {
 
     }
 
-    EventHandler<MouseEvent> canvasMousePressedHandler
+    static EventHandler<MouseEvent> canvasMousePressedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -51,13 +53,14 @@ public class LineButton extends Button {
             Layer.prepareUndo();
             startX = t.getX();
             startY = t.getY();
-            tempCanvas = new Canvas(Layer.getCanvasWidth(), Layer.getCanvasHeight());
-            tempGC = tempCanvas.getGraphicsContext2D(); 
+            tempImageCanvas = new Layer(true);
+            tempCanvas = tempImageCanvas.getCanvas();
+            tempGC = tempCanvas.getGraphicsContext2D();
         }
 
     };
 
-    EventHandler<MouseEvent> canvasMouseDraggedHandler
+    static EventHandler<MouseEvent> canvasMouseDraggedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -73,7 +76,7 @@ public class LineButton extends Button {
         }
     };
 
-    EventHandler<MouseEvent> canvasMouseReleasedHandler
+    static EventHandler<MouseEvent> canvasMouseReleasedHandler
             = new EventHandler<MouseEvent>() {
 
         @Override
@@ -88,10 +91,6 @@ public class LineButton extends Button {
             //Updates Layer version of the canvas with the new one that 
             //has a freshly drawn line
             Layer.updateCanvas(gc);
-            //myCanvas.setOnMousePressed(null);
-            //myCanvas.setOnMouseDragged(null);
-            //myCanvas.setOnMouseReleased(null);
-            //myCanvas.requestFocus();
 
         }
     };

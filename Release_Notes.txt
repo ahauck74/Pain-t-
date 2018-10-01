@@ -41,12 +41,11 @@ TODO:
   * Add user input for size of new canvas
 
 
-Week 4: Canvas Layers?
+Week 4: 9/28/18 Canvas Layers?
     * Added eraser button
     * Added layering system
 
     Known Issues
         * Adding a new layer while in the draw environment doesn't move the draw 
-          environment to the new layer (Can I get mouse event handlers from a canvas and move them 
-          a different canvas?)
-        * 
+          environment to the new layer (FIXED 10/1/18)
+        

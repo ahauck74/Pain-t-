@@ -74,8 +74,9 @@ public class LayerOrganizer extends ListView{
             public void handle(MouseEvent event) {
                 MouseButton button = event.getButton();
                 if (button == MouseButton.PRIMARY) {
-                    Layer.exitDrawEnvironment();
+                    Layer.clearHandlers();
                     layer.setCurrentLayer();
+                    Layer.resetMouseHandlers();
                     Double rank = layer.getLayerOrder();
                     hideUpperLayers(rank);
 
@@ -88,7 +89,7 @@ public class LayerOrganizer extends ListView{
 
     public static void makeNewLayer() {
         Layer newLayer = new Layer(false);
-        Layer.exitDrawEnvironment(); //This prevents being in a draw environment for a lower layer
+        
     }
 
     private void layerAction() {

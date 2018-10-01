@@ -196,9 +196,9 @@ public class SnipButton extends Button {
 
             LayerOrganizer.removeTempLayer(tempImageCanvas);
             LayerOrganizer.reorder();
-            myCanvas.setOnMousePressed(null);
-            myCanvas.setOnMouseDragged(null);
-            myCanvas.setOnMouseReleased(null);
+                myCanvas.setOnMousePressed(null);
+                myCanvas.setOnMouseDragged(null);
+                myCanvas.setOnMouseReleased(null);
 
         }
     };
