@@ -49,3 +49,5 @@ Week 4: 9/28/18 Canvas Layers?
         * Adding a new layer while in the draw environment doesn't move the draw 
           environment to the new layer (FIXED 10/1/18)
         
+Week 5: 10/1/18
+    * 

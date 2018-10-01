@@ -27,6 +27,9 @@ public class Tools extends ToolBar {
     static private ComboBox<String> widthPicker;
     static private double drawWidth;
     
+    static private ComboBox<String> sidesPicker;
+    static private int nSides;
+    
     static private CheckBox setFill;
     
 
@@ -40,6 +43,7 @@ public class Tools extends ToolBar {
         EraserButton eraserButton = new EraserButton();
         CircleButton circleButton = new CircleButton();
         RectangleButton rectangleButton = new RectangleButton();
+        NGonButton nGonButton = new NGonButton();
         SnipButton snipButton = new SnipButton();
         setFill = new CheckBox("Fill Shapes");
 
@@ -60,9 +64,15 @@ public class Tools extends ToolBar {
         widthPicker.setPromptText("Line Width");
         widthPicker.setOnAction(e -> pickWidth());
         
+        sidesPicker = new ComboBox();
+        sidesPicker.setEditable(true);
+        sidesPicker.getItems().addAll("3", "5", "6", "7", "8", "10", "12", "20", "100");
+        sidesPicker.setPromptText("Sides");
+        sidesPicker.setOnAction(e -> pickN());
+        
           
 
-        this.getItems().addAll(lineButton,circleButton, rectangleButton, setFill, drawButton, eraserButton,  snipButton, colorPicker, colorFillPicker, widthPicker);
+        this.getItems().addAll(lineButton,circleButton, rectangleButton, nGonButton, sidesPicker,  setFill, drawButton, eraserButton,  snipButton, colorPicker, colorFillPicker, widthPicker);
 
     }
 
@@ -79,6 +89,13 @@ public class Tools extends ToolBar {
         drawWidth =  Double.parseDouble(widthPicker.getValue());
     }
     
+    private static void pickN() {
+        nSides =  Integer.parseInt(sidesPicker.getValue());
+    }
+
+    public static int getN() {
+        return nSides;
+    }
     public static Color getCurrentColor() {
         return currentColor;
     }
