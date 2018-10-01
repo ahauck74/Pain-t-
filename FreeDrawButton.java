@@ -2,15 +2,13 @@
 package paint;
 
 import javafx.event.EventHandler;
+import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 
 /**
  *
@@ -20,13 +18,15 @@ public class FreeDrawButton extends Button {
 
     private static Canvas myCanvas;
     private static GraphicsContext gc;
+    private static ImageView drawImage;
 
 
     public FreeDrawButton() {
-        ImageView rectangleImage = new ImageView("resources/pencil.png");
-        rectangleImage.setFitHeight(20);
-        rectangleImage.setFitWidth(20);
-        this.setGraphic(rectangleImage);
+        drawImage = new ImageView("resources/pencil.png");
+        drawImage.setFitHeight(20);
+        drawImage.setFitWidth(20);
+        this.setGraphic(drawImage);
+        setTooltip(new Tooltip("Free Draw"));
         this.setOnAction(e -> enterDrawEnvironment());
         
     }
@@ -35,7 +35,7 @@ public class FreeDrawButton extends Button {
         Layer.setDrawEnvironment("draw");
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();
-        
+        myCanvas.setCursor(new ImageCursor(drawImage.getImage(),0.0,300.0));
         myCanvas.setOnMouseClicked(mouseHandler);
         myCanvas.setOnMouseDragged(mouseHandler);
         myCanvas.setOnMouseEntered(mouseHandler);
