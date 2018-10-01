@@ -89,6 +89,7 @@ public class Layer extends Button implements Comparable {
         this.setCurrentLayer();
     }
     
+    //This method is used to scale large images to fit within the window while maintaining their aspect ratio
     private static double[] resize(Image img) {
         double maxWidth = 1920;
         double maxHeight = 720;
@@ -115,7 +116,7 @@ public class Layer extends Button implements Comparable {
         return size;
     }
 
-    //This constructor is used for adding additional layers
+    //This constructor is used for adding additional layers with the option of making them temporary
     public Layer(Boolean isTemp) {
 
         myCanvas = new Canvas(width, height);
@@ -135,7 +136,8 @@ public class Layer extends Button implements Comparable {
         }
         
     }
-    
+    //When changing the current layer, this method should be called so that the user won't have to 
+    //reselect the draw button to continue drawing
     public static void resetMouseHandlers() {
         switch (drawEnvironment) {
             case "rectangle": 
@@ -173,7 +175,7 @@ public class Layer extends Button implements Comparable {
     }
 
     //Anytime changes are made to the image canvas this method should be called
-    //so that this class maintains an updated gc
+    //so that this class maintains an up-to-date gc
     public static void updateCanvas(GraphicsContext gc) {
         myCurrentLayer.gc = gc;
         Layer.changesMade = true; //To prevent losing unsaved progress

@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -32,6 +33,7 @@ public class LineButton extends Button {
         lineImage.setFitHeight(20);
         lineImage.setFitWidth(20);
         this.setGraphic(lineImage);
+        setTooltip(new Tooltip("Draw Line"));
         this.setOnAction(e -> this.enterDrawEnvironment());
     }
 

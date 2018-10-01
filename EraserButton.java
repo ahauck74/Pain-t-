@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -28,6 +29,7 @@ public class EraserButton extends Button{
         //rectangleImage.setFitHeight(20);
         //rectangleImage.setFitWidth(20);
         //this.setGraphic(rectangleImage);
+        setTooltip(new Tooltip("Eraser"));
         this.setOnAction(e -> enterDrawEnvironment());
 
     }

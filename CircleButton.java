@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -32,6 +33,7 @@ public class CircleButton extends Button{
         circleImage.setFitHeight(20);
         circleImage.setFitWidth(20);
         this.setGraphic(circleImage);
+        setTooltip(new Tooltip("Draw Circle"));
         this.setOnAction(e -> this.enterDrawEnvironment());
     }
 

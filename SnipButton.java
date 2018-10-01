@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -48,6 +49,7 @@ public class SnipButton extends Button {
         scissorsImage.setFitHeight(20);
         scissorsImage.setFitWidth(20);
         setGraphic(scissorsImage);
+        setTooltip(new Tooltip("Cut and Drag"));
         this.setOnAction(e -> this.getCut());
     }
 
