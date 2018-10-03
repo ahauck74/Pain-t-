@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,12 +33,14 @@ public class TextButton extends Button {
     private static double height;
     private static String text;
     private static int fontSize;
+    private static TextArea textBox;
 
     public TextButton() {
         //ImageView textImage = new ImageView("resources/text.png");
         //textImage.setFitHeight(20);
         //textImage.setFitWidth(20);
         //this.setGraphic(textImage);
+        this.setText("Text");
         setTooltip(new Tooltip("Draw Text"));
         this.setOnAction(e -> this.enterDrawEnvironment());
     }
@@ -62,6 +65,9 @@ public class TextButton extends Button {
             Layer.prepareUndo();
             startX = t.getX();
             startY = t.getY();
+            textBox = new TextArea();
+            textBox.setWrapText(true);
+            Paint.addText(textBox);
             tempImageCanvas = new Layer(true);
             tempCanvas = tempImageCanvas.getCanvas();
             tempGC = tempCanvas.getGraphicsContext2D();
@@ -71,6 +77,9 @@ public class TextButton extends Button {
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
             width = 50;
             height = 15;
+            textBox.setMaxWidth(width);
+            textBox.setMaxHeight(height);
+            
             fontSize = 10;
             tempGC.strokeRect(startX, startY, width, height);
             System.out.println("hi");
@@ -83,16 +92,18 @@ public class TextButton extends Button {
                 tempGC.fillRect(startX, startY, width, height);
             }
             text = "";
-            tempGC.strokeText(text, startX, startY + fontSize, width);
+            tempGC.strokeText(text, startX, startY + fontSize);
             System.out.println("hi");
             tempCanvas.setOnMousePressed(finalizeDraw);
-            tempCanvas.requestFocus();
-            tempCanvas.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            
+            textBox.requestFocus();
+            textBox.setOnKeyTyped(new EventHandler<KeyEvent>() {
                 public void handle(final KeyEvent keyEvent) {
                     handleEvent(keyEvent);
                 }
             }
             );
+            
         }
     };
 
@@ -130,7 +141,7 @@ public class TextButton extends Button {
                     gc.fillRect(startX, startY, width, height);
                 }
 
-                gc.strokeText(text, startX, startY + fontSize, width);
+                gc.strokeText(text, startX, startY + fontSize);
 
                 LayerOrganizer.removeTempLayer(tempImageCanvas);
 
@@ -141,7 +152,8 @@ public class TextButton extends Button {
 
     public static void handleEvent(KeyEvent event) {
         System.out.println("hi there");
-        text += event.getCharacter();
+        //text += event.getCharacter();
+        text = textBox.getText().replaceAll("\n", System.getProperty("line.separator"));
         tempGC.clearRect(0, 0, Layer.getCanvasWidth(), Layer.getCanvasHeight());
         tempGC.setStroke(Color.BLACK);
         tempGC.setLineDashes(5);
@@ -156,7 +168,7 @@ public class TextButton extends Button {
         if (Tools.fillShape()) {
             tempGC.fillRect(startX, startY, width, height);
         }
-        tempGC.strokeText(text, startX, startY + fontSize, width);
+        tempGC.strokeText(text, startX, startY + fontSize);
     }
 
     static EventHandler<MouseEvent> handleDrag
@@ -181,7 +193,7 @@ public class TextButton extends Button {
             if (Tools.fillShape()) {
                 tempGC.fillRect(startX, startY, width, height);
             }
-            tempGC.strokeText(text, startX, startY + fontSize, width);
+            tempGC.strokeText(text, startX, startY + fontSize);
         }
     };
     
@@ -208,7 +220,7 @@ public class TextButton extends Button {
             if (Tools.fillShape()) {
                 tempGC.fillRect(startX, startY, width, height);
             }
-            tempGC.strokeText(text, startX, startY + fontSize, width);
+            tempGC.strokeText(text, startX, startY + fontSize);
         }
     };
     

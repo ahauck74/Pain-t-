@@ -1,7 +1,6 @@
 package paint;
 
 import java.util.Collection;
-import java.util.Iterator;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -10,10 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -143,6 +140,15 @@ public class Paint extends Application {
     public static void addCanvas(Canvas newLayerCanvas) {
         imagePane.getChildren().add(0, newLayerCanvas);
         newLayerCanvas.toFront();
+    }
+    
+    public static void addText(TextArea textBox) {
+        imagePane.getChildren().add(0, textBox);
+        textBox.toBack();
+    }
+    
+    public static void removeText(TextArea textBox) {
+        imagePane.getChildren().remove(textBox);
     }
 
     public static void addCanvases(Collection layers) {

@@ -35,7 +35,7 @@ public class CircleButton extends Button{
         circleImage.setFitWidth(20);
         this.setGraphic(circleImage);
         setTooltip(new Tooltip("Draw Circle"));
-        this.setOnAction(e -> this.enterDrawEnvironment());
+        this.setOnAction(e -> enterDrawEnvironment());
     }
 
     public static void enterDrawEnvironment() {

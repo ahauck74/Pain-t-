@@ -175,7 +175,7 @@ public class Layer extends Button implements Comparable {
     }
 
     //Anytime changes are made to the image canvas this method should be called
-    //so that this class maintains an up-to-date gc
+    //so that this class maintains an up-to-date     gc
     public static void updateCanvas(GraphicsContext gc) {
         myCurrentLayer.gc = gc;
         Layer.changesMade = true; //To prevent losing unsaved progress
