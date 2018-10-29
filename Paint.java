@@ -95,6 +95,10 @@ public class Paint extends Application {
         unsavedWorkPrompt.close();
     }
 
+    /**
+     *
+     * @param makeNew
+     */
     public static void attemptClose(Boolean makeNew) {//null for close, true for new canvas, false for open image
         // hasUnsavedProgress checks if the canvas has been changed since the last save
         // and isNotSaved returns true when a save file hasn't been created yet.
@@ -137,28 +141,52 @@ public class Paint extends Application {
 
     //This add a temporary canvas for previewing shapes while dragging
     //It could potentially be useful for an undo feature in the future
+
+    /**
+     *
+     * @param newLayerCanvas
+     */
     public static void addCanvas(Canvas newLayerCanvas) {
         imagePane.getChildren().add(0, newLayerCanvas);
         newLayerCanvas.toFront();
     }
     
+    /**
+     *
+     * @param textBox
+     */
     public static void addText(TextArea textBox) {
         imagePane.getChildren().add(0, textBox);
         textBox.toBack();
     }
     
+    /**
+     *
+     * @param textBox
+     */
     public static void removeText(TextArea textBox) {
-        imagePane.getChildren().remove(textBox);
+        imagePane.getChildren().remove( textBox);
     }
 
+    /**
+     *
+     * @param layers
+     */
     public static void addCanvases(Collection layers) {
 
     }
 
+    /**
+     *
+     */
     public static void removeAllCanvases() {
         imagePane.getChildren().clear();
     }
 
+    /**
+     *
+     * @param oldLayerCanvas
+     */
     public static void removeCanvas(Canvas oldLayerCanvas) {
         imagePane.getChildren().remove(oldLayerCanvas);
     }
@@ -170,6 +198,20 @@ public class Paint extends Application {
             FileBar.openFile();
         }
         unsavedWorkPrompt.hide();
+    }
+    
+    /**
+     *
+     */
+    public static void indicateUnsaved() {
+        primaryStage.setTitle("Pain(t)*");
+    }
+    
+    /**
+     *
+     */
+    public static void indicateSaved() {
+        primaryStage.setTitle("Pain(t)");
     }
 
 }

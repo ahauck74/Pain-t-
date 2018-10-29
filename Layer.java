@@ -41,19 +41,35 @@ public class Layer extends Button implements Comparable {
     private Stack redoStack;
     private static SnapshotParameters sp;
 
+    /**
+     *
+     * @return
+     */
     public double getLayerOrder() {
         return layerOrder;
     }
     
+    /**
+     *
+     * @return
+     */
     public static int getNumLayers() {
         return numLayers;
     }
     
+    /**
+     *
+     * @return
+     */
     public static double getCurrentLayerOrder() {
         return myCurrentLayer.layerOrder;
     }
 
     //This is the blank canvas that appears when the program starts.
+
+    /**
+     *
+     */
     public Layer() {
         undoStack = new Stack();
         redoStack = new Stack();
@@ -71,6 +87,11 @@ public class Layer extends Button implements Comparable {
     }
 
     //Creates a new canvas with the selected image
+
+    /**
+     *
+     * @param image
+     */
     public Layer(Image image) {
         undoStack = new Stack();
         redoStack = new Stack();
@@ -117,6 +138,11 @@ public class Layer extends Button implements Comparable {
     }
 
     //This constructor is used for adding additional layers with the option of making them temporary
+
+    /**
+     *
+     * @param isTemp
+     */
     public Layer(Boolean isTemp) {
 
         myCanvas = new Canvas(width, height);
@@ -138,6 +164,10 @@ public class Layer extends Button implements Comparable {
     }
     //When changing the current layer, this method should be called so that the user won't have to 
     //reselect the draw button to continue drawing
+
+    /**
+     *
+     */
     public static void resetMouseHandlers() {
         switch (drawEnvironment) {
             case "rectangle": 
@@ -158,56 +188,102 @@ public class Layer extends Button implements Comparable {
         }
     }
     
+    /**
+     *
+     * @param drawEnvironment
+     */
     public static void setDrawEnvironment(String drawEnvironment) {
         Layer.drawEnvironment = drawEnvironment;
     }
 
+    /**
+     *
+     */
     public void setCurrentLayer() {
         myCurrentLayer = this;
     }
     
+    /**
+     *
+     * @return
+     */
     public static Canvas getCurrentCanvas() {
         return myCurrentLayer.myCanvas;
     }
     
+    /**
+     *
+     * @return
+     */
     public static GraphicsContext getCurrentContext() {
         return myCurrentLayer.gc;
     }
 
     //Anytime changes are made to the image canvas this method should be called
     //so that this class maintains an up-to-date     gc
+
+    /**
+     *
+     * @param gc
+     */
     public static void updateCanvas(GraphicsContext gc) {
         myCurrentLayer.gc = gc;
         Layer.changesMade = true; //To prevent losing unsaved progress
+        Paint.indicateUnsaved();
     }
  
-
+    /**
+     *
+     * @return
+     */
     public Canvas getCanvas() {
         return myCanvas;
     }
 
-    
+    /**
+     *
+     * @return
+     */
     public static Image getImage() {
         return myCurrentLayer.myCanvas.snapshot(null, null);
     }
     
+    /**
+     *
+     * @return
+     */
     public static WritableImage getWImage() {
         return myCurrentLayer.myCanvas.snapshot(null, null);
     }
 
+    /**
+     *
+     * @return
+     */
     public static Boolean hasUnsavedProgress() {
         return changesMade;
     }
 
+    /**
+     *
+     */
     public static void setUpToDate() {
         changesMade = false;
+        Paint.indicateSaved();
     }
 
-
+    /**
+     *
+     * @return
+     */
     public static double getCanvasWidth() {
         return width;
     }
 
+    /**
+     *
+     * @return
+     */
     public static double getCanvasHeight() {
         return height;
     }
@@ -215,6 +291,10 @@ public class Layer extends Button implements Comparable {
     //When changes are made to this canvas this method should be called 
     //in addition to updateCanvas() 
     //Uundo features are static since they apply to the current canvas
+
+    /**
+     *
+     */
     public static void prepareUndo() {
         sp = new SnapshotParameters();
         sp.setFill(Color.TRANSPARENT);
@@ -222,12 +302,18 @@ public class Layer extends Button implements Comparable {
         //prevImage = Layer.myCanvas.snapshot(null, null);
     }
 
+    /**
+     *
+     */
     public static void prepareRedo() {
         SnapshotParameters sp = new SnapshotParameters();
         sp.setFill(Color.TRANSPARENT);
         myCurrentLayer.redoStack.push(myCurrentLayer.myCanvas.snapshot(sp, null));
     }
 
+    /**
+     *
+     */
     public static void undo() {
         if (myCurrentLayer.undoStack.empty()) {
             return;
@@ -247,6 +333,9 @@ public class Layer extends Button implements Comparable {
 
     }
 
+    /**
+     *
+     */
     public static void redo() {
         if (myCurrentLayer.redoStack.empty()) {
             return;
@@ -271,6 +360,9 @@ public class Layer extends Button implements Comparable {
 
     }
     
+    /**
+     *
+     */
     public static void clearHandlers() {
         myCurrentLayer.getCanvas().setOnMouseClicked(null);
         myCurrentLayer.getCanvas().setOnMouseDragged(null);

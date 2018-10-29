@@ -20,7 +20,9 @@ public class FreeDrawButton extends Button {
     private static GraphicsContext gc;
     private static ImageView drawImage;
 
-
+    /**
+     * Default constructor.
+     */
     public FreeDrawButton() {
         drawImage = new ImageView("resources/pencil.png");
         drawImage.setFitHeight(20);
@@ -31,6 +33,9 @@ public class FreeDrawButton extends Button {
         
     }
     
+    /**
+     * Activates the {@link EventHandler}s for drawing on the {@link Layer#myCurrentLayer}.
+     */
     public static void enterDrawEnvironment() {
         Layer.setDrawEnvironment("draw");
         myCanvas = Layer.getCurrentCanvas();

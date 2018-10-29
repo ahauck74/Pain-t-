@@ -29,6 +29,9 @@ public class CircleButton extends Button{
     private static double endX;
     private static double endY;
 
+    /**
+     * Activates the {@link EventHandler}s for drawing circles on the {@link Layer#myCurrentLayer}.
+     */
     public CircleButton() {
         ImageView circleImage = new ImageView("resources/circle.png");
         circleImage.setFitHeight(20);
@@ -38,6 +41,9 @@ public class CircleButton extends Button{
         this.setOnAction(e -> enterDrawEnvironment());
     }
 
+    /**
+     *
+     */
     public static void enterDrawEnvironment() {
         Layer.setDrawEnvironment("circle");
         myCanvas = Layer.getCurrentCanvas();
@@ -79,7 +85,7 @@ public class CircleButton extends Button{
             
             tempGC.setLineWidth(Tools.getDrawWidth());//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
-            if (Tools.fillShape()) {
+            if (Tools.isSetToFillShape()) {
                 tempGC.fillOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             }
             tempGC.strokeOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
@@ -100,7 +106,7 @@ public class CircleButton extends Button{
             gc.setFill(Tools.getCurrentFillColor());
             
             gc.setLineWidth(Tools.getDrawWidth());
-            if (Tools.fillShape()) {
+            if (Tools.isSetToFillShape()) {
                 gc.fillOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             }
             gc.strokeOval(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));

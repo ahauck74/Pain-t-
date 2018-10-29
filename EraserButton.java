@@ -11,30 +11,51 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * The EraserButton class allows the user to enter the erase draw-environment
+ * when clicked. While in in the erase draw-environment, dragging the mouse on the bottom layer
+ * of the canvas will draw {@link Color#WHITE} or {@link Color#TRANSPARENT} otherwise. Drawing transparently in 
+ * this case will replace pixels with transparent ones.
  * @author ahauc
  */
 public class EraserButton extends Button{
 
+    
+    /**
+     * The {@link Canvas} on the top of the {@link StackPane} selected from {@link Layer#myCurrentLayer}.
+     */
     private static Canvas myCanvas;
+    
+    /**
+     * The {@link GraphicsContext} obtained from {@link myCanvas}.
+     */
     private static GraphicsContext gc;
+    
+    /**
+     * The {@link double} representing the width for the eraser.
+     */
     private static double width;
 
+    /**
+     * Default constructor. 
+     */
     public EraserButton() {
-        this.setText("Eraser");
-        //ImageView rectangleImage = new ImageView("resources/pencil.png");
-        //rectangleImage.setFitHeight(20);
-        //rectangleImage.setFitWidth(20);
-        //this.setGraphic(rectangleImage);
+        ImageView eraserImage = new ImageView("resources/eraser.png");
+        eraserImage.setFitHeight(20);
+        eraserImage.setFitWidth(20);
+        this.setGraphic(eraserImage);
         setTooltip(new Tooltip("Eraser"));
         this.setOnAction(e -> enterDrawEnvironment());
 
     }
 
+    /**
+     * Activates the {@link EventHandler}s for erasing on the {@link Layer#myCurrentLayer}.
+     */
     public static void enterDrawEnvironment() {
         Layer.setDrawEnvironment("erase");
         myCanvas = Layer.getCurrentCanvas();

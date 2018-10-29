@@ -36,6 +36,11 @@ public class FileBar extends Menu {
     private static File file;
     private static FileChooser fileChooser;
 
+    /**
+     *
+     * @param pane
+     * @param stage
+     */
     public FileBar(Pane pane, Stage stage) {
         this.setText("File");
         FileBar.imagePane = pane;
@@ -85,11 +90,18 @@ public class FileBar extends Menu {
     }
 
     //Sets filepath to null so that when saving, it prompts for a new filepath
+
+    /**
+     *
+     */
     public static void saveAs() {
         file = null;
         saveToFile();
     }
 
+    /**
+     *
+     */
     public static void saveToFile() {
         System.out.println("Saving...");
 
@@ -101,6 +113,10 @@ public class FileBar extends Menu {
 
     }
 
+    /**
+     *
+     * @param file
+     */
     public static void saveFile(File file) {
         Canvas saveCanvas = new Canvas(Layer.getCanvasWidth(), Layer.getCanvasHeight());
         GraphicsContext saveGC = saveCanvas.getGraphicsContext2D();
@@ -124,6 +140,9 @@ public class FileBar extends Menu {
         }
     }
 
+    /**
+     *
+     */
     public static void newBlank() {
         Layer myCanvas = new Layer();
         LayerOrganizer.removeLayers();
@@ -132,6 +151,9 @@ public class FileBar extends Menu {
         imagePane.getChildren().add(Layer.getCurrentCanvas());
     }
 
+    /**
+     *
+     */
     public static void openFile() {
         //Use a different file variable when opening to avoid defaulting to 
         //overwriting the original file.
@@ -147,8 +169,10 @@ public class FileBar extends Menu {
         imagePane.getChildren().add(Layer.getCurrentCanvas());
     }
     
-    
-
+    /**
+     *
+     * @return
+     */
     public static Boolean isNotSaved() {
         return (file == null);
     }

@@ -50,4 +50,14 @@ Week 4: 9/28/18 Canvas Layers?
           environment to the new layer (FIXED 10/1/18)
         
 Week 5: 10/1/18
-    * 
+    * Added N-Gon
+    * Added text box 
+    * Added user input for font size 
+    * Added user input for font
+
+Week 6: 
+    TODO:
+        * Create interface class for drawing classes that use temporary canvases
+            - Upon mouse press, create call LayerOrganizer.addTempCanvas()
+            - Method then polmorphically calls method to set drag and release actions??
+            - 

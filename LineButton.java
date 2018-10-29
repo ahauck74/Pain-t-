@@ -13,21 +13,65 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
- *
+ * The LineButton class allows the user to draw a line from a point (x1, y1) to (x2, y2) 
+ * from mouse input. The format of the line is affected by {@link Tools#drawWidth} and
+ * {@link Tools#currentColor}.
  * @author ahauc
  */
 public class LineButton extends Button {
 
+     /**
+     * The {@link Canvas} on the top of the {@link StackPane} selected from {@link Layer#myCurrentLayer}.
+     */
     private static Canvas myCanvas;
+    
+    /**
+     * The {@link GraphicsContext} obtained from {@link myCanvas}.
+     */
     private static GraphicsContext gc;
+    
+    /**
+     * The {@link Layer} which is temporary and used to preview the drawing.
+     */
     private static Layer tempImageCanvas;
+    
+    /**
+     * The {@link Canvas} which is temporary and used to preview the drawing.
+     */
     private static Canvas tempCanvas;
+    
+    /**
+     * The {@link GraphicsContext} which is temporary and used to preview the drawing.
+     */
     private static GraphicsContext tempGC;
+    
+    /**
+     * The {@link double} representing the starting X coordinate on the {@link Canvas} 
+     * for the line.
+     */
     private static double startX;
+    
+    /**
+     * The {@link double} representing the starting Y coordinate on the {@link Canvas} 
+     * for the line.
+     */
     private static double startY;
+    
+    /**
+     * The {@link double} representing the ending X coordinate on the {@link Canvas} 
+     * for the line.
+     */
     private static double endX;
+    
+    /**
+     * The {@link double} representing the ending Y coordinate on the {@link Canvas} 
+     * for the line.
+     */
     private static double endY;
 
+    /**
+     * Class constructor.
+     */
     public LineButton() {
         Layer.setDrawEnvironment("line");
         ImageView lineImage = new ImageView("resources/line.png");
@@ -38,6 +82,9 @@ public class LineButton extends Button {
         this.setOnAction(e -> this.enterDrawEnvironment());
     }
 
+    /**
+     * Activates the {@link EventHandler}s for drawing lines on the {@link Layer#myCurrentLayer}.
+     */
     public static void enterDrawEnvironment() {
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();

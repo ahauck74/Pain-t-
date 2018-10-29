@@ -45,6 +45,9 @@ public class SnipButton extends Button {
 
     private static WritablePixelFormat<IntBuffer> format;
 
+    /**
+     *
+     */
     public SnipButton() {
         ImageView scissorsImage = new ImageView("resources/scissors.png");
         scissorsImage.setFitHeight(20);
@@ -54,6 +57,9 @@ public class SnipButton extends Button {
         this.setOnAction(e -> this.getCut());
     }
 
+    /**
+     * Activates the {@link EventHandler}s for snipping on the {@link Layer#myCurrentLayer}.
+     */
     public void getCut() {
         myCanvas = Layer.getCurrentCanvas();
         gc = myCanvas.getGraphicsContext2D();

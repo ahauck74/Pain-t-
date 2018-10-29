@@ -29,6 +29,9 @@ public class RectangleButton extends Button {
     private static double endX;
     private static double endY;
 
+    /**
+     * Activates the {@link EventHandler}s for drawing rectangles on the {@link Layer#myCurrentLayer}.
+     */
     public RectangleButton() {
         ImageView rectangleImage = new ImageView("resources/rectangle.png");
         rectangleImage.setFitHeight(20);
@@ -38,6 +41,9 @@ public class RectangleButton extends Button {
         this.setOnAction(e -> this.enterDrawEnvironment());
     }
 
+    /**
+     *
+     */
     public static void enterDrawEnvironment() {
         Layer.setDrawEnvironment("rectangle");
         myCanvas = Layer.getCurrentCanvas();
@@ -77,7 +83,7 @@ public class RectangleButton extends Button {
             tempGC.setFill(Tools.getCurrentFillColor());
             tempGC.setLineWidth(Tools.getDrawWidth());//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
-            if (Tools.fillShape()) {
+            if (Tools.isSetToFillShape()) {
                 tempGC.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             }
             tempGC.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
@@ -97,7 +103,7 @@ public class RectangleButton extends Button {
             gc.setStroke(Tools.getCurrentColor());
             gc.setFill(Tools.getCurrentFillColor());
             gc.setLineWidth(Tools.getDrawWidth());
-            if (Tools.fillShape()) {
+            if (Tools.isSetToFillShape()) {
                 gc.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
             }
             gc.strokeRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX-endX), Math.abs(startY-endY));
