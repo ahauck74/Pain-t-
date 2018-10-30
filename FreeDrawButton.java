@@ -11,7 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
- *
+ * The FreeDrawButton class allows the user to draw freely on the current {@link Canvas}.
+ * checked. The drawing  is affected by {@link Tools#currentColor} and 
+ * {@link Tools#drawWidth}. 
  * @author ahauc
  */
 public class FreeDrawButton extends Button {

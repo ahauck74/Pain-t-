@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -19,13 +20,27 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
- *
+ *The Paint class is the main file for the paint application. It extends {@link Application} 
+ * sets the {@link Stage}. 
  * @author ahauc
  */
 public class Paint extends Application {
 
+    /**
+     * The {@link BorderPane} that holds the general layout for the application. In the top 
+     * is a {@link VBox} that contains the {@link MenuBar} and {@link Tools}. 
+     */
     private static BorderPane root;
+    
+    /**
+     * The {@link StackPane} contains all the {@link Layer} objects which hold the 
+     * {@link Canvas} objects.
+     */
     private static StackPane imagePane;
+    
+    /**
+     * The {@link Stage} is the primary window for the application.
+     */
     private static Stage primaryStage;
 
     @Override
@@ -40,8 +55,8 @@ public class Paint extends Application {
         topContainer.getChildren().addAll(mainMenu, toolBar);
         imagePane = new StackPane();
 
-        FileBar fileDrpDwn = new FileBar(imagePane, primaryStage);
-        mainMenu.getMenus().addAll(fileDrpDwn);
+        FileBar fileDropDown = new FileBar(imagePane, primaryStage);
+        mainMenu.getMenus().addAll(fileDropDown);
 
         LayerOrganizer layerBar = new LayerOrganizer();
         Layer blank = new Layer(); //Creates a blank white canvas
@@ -71,15 +86,14 @@ public class Paint extends Application {
     private static void saveAndClose(Stage unsavedWorkPrompt) {
         FileBar.saveToFile();
         unsavedWorkPrompt.close();
-        //attemptClose(primaryStage);
     }
     
     private static void dontSave(Stage unsavedWorkPrompt, Boolean makeNew) {
         unsavedWorkPrompt.close();
-        noSave(makeNew);
+        noSaveNeeded(makeNew);
     }
     
-    private static void noSave(Boolean makeNew) {
+    private static void noSaveNeeded(Boolean makeNew) {
         if (makeNew == null) {
             System.out.println("Closing: " + makeNew);
             Platform.exit();
@@ -88,7 +102,6 @@ public class Paint extends Application {
         } else {
             FileBar.openFile();
         }
-
     }
 
     private static void cancel(Stage unsavedWorkPrompt) {
@@ -96,10 +109,13 @@ public class Paint extends Application {
     }
 
     /**
-     *
-     * @param makeNew
+     * This method is called when the user tries to close, open, or open new with 
+     * unsaved progress.
+     * @param makeNew For attempting to exit the program, makeNew is passed as null. If 
+     * attempting to create a new canvas, makeNew is true, and false for opening an image.
      */
     public static void attemptClose(Boolean makeNew) {//null for close, true for new canvas, false for open image
+        
         // hasUnsavedProgress checks if the canvas has been changed since the last save
         // and isNotSaved returns true when a save file hasn't been created yet.
         // This prevents the program from closing when exiting the save dialog after 
@@ -124,36 +140,35 @@ public class Paint extends Application {
             newWindow.setTitle("Warning: Unsaved Changes");
             newWindow.setScene(secondScene);
 
+            //Button action handlers
             saveChanges.setOnAction(e -> saveAndClose(newWindow));
             close.setOnAction(e -> dontSave(newWindow, makeNew));
             cancel.setOnAction(e -> cancel(newWindow));
 
-            // Set position of second window, related to primary window.
+            // Set position of second window, relative to primary window.
             newWindow.setX(primaryStage.getX() + 200);
             newWindow.setY(primaryStage.getY() + 100);
-
             newWindow.show();
-
         } else {
-            noSave(makeNew);
+            noSaveNeeded(makeNew);
         }
     }
 
-    //This add a temporary canvas for previewing shapes while dragging
-    //It could potentially be useful for an undo feature in the future
-
     /**
-     *
-     * @param newLayerCanvas
+     * Adds a new {@link Canvas} to the front of the {@link Paint#imagePane}
+     * @param newCanvas The {@link Canvas} to be added to the {@link Paint#imagePane}.
      */
-    public static void addCanvas(Canvas newLayerCanvas) {
-        imagePane.getChildren().add(0, newLayerCanvas);
-        newLayerCanvas.toFront();
+    public static void addCanvas(Canvas newCanvas) {
+        imagePane.getChildren().add(0, newCanvas);
+        newCanvas.toFront();
     }
     
     /**
-     *
-     * @param textBox
+     * Adds a {@link TextArea} to handle keyboard input for the {@link TextButton}. It 
+     * is added to the back of the {@link Paint#imagePane} so that it isn't seen. Instead the text is 
+     * copied from it and added to the front {@link Canvas} with {@link GraphicsContext#strokeText}.
+     * @param  textBox The {@link TextArea} to be added inconspicuously to the back 
+     * of the {@link imagePane}.
      */
     public static void addText(TextArea textBox) {
         imagePane.getChildren().add(0, textBox);
@@ -161,31 +176,23 @@ public class Paint extends Application {
     }
     
     /**
-     *
-     * @param textBox
+     * Removes the {@link TextArea} added by {@link Paint#addText}. 
+     * @param textBox The {@link TextArea} to be removed.
      */
     public static void removeText(TextArea textBox) {
         imagePane.getChildren().remove( textBox);
     }
 
     /**
-     *
-     * @param layers
-     */
-    public static void addCanvases(Collection layers) {
-
-    }
-
-    /**
-     *
+     * Removes all the {@link Object}s from the {@link Paint#imagePane}.
      */
     public static void removeAllCanvases() {
         imagePane.getChildren().clear();
     }
 
     /**
-     *
-     * @param oldLayerCanvas
+     * Removes a single {@link Canvas} from the {@link Paint#imagePane}.
+     * @param oldLayerCanvas The {@link Canvas} to be removed.
      */
     public static void removeCanvas(Canvas oldLayerCanvas) {
         imagePane.getChildren().remove(oldLayerCanvas);
@@ -201,14 +208,14 @@ public class Paint extends Application {
     }
     
     /**
-     *
+     * Indicates in the application heading that there is unsaved work.
      */
     public static void indicateUnsaved() {
         primaryStage.setTitle("Pain(t)*");
     }
     
     /**
-     *
+     * Updates the application heading to indicate that there is no unsaved work.
      */
     public static void indicateSaved() {
         primaryStage.setTitle("Pain(t)");

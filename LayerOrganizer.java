@@ -11,16 +11,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 /**
  * The LayerOrganizer class handles the ordering of Layer objects and displays
  * them as Button objects in a ListView on the right of the BorderPane. If a new
  * Layer object is created it is managed by this class to ensure that is added
  * to the StackPane with proper relation to the other Layers. This class also
- * ensures that the current Layer, {@link #myCurrentLayer}, is always at the top
+ * ensures that the current Layer, {@link Layer#myCurrentLayer}, is always at the top
  * of the StackPane.
  *
  * @author Alec Hauck
@@ -157,7 +159,6 @@ public class LayerOrganizer extends ListView {
     public static void reorder() {
         Collections.sort(layers);
         listView.setItems(layers);
-        Paint.addCanvases(layers);
     }
 
     /**

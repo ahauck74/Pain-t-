@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 /**
  * The Tools class extends {@link ToolBar} to contain all the following tool classes {@link CircleButton}, 
- * {@link ColorMatcher}, {@link CustomColorPicker}, {@link EraserButton}, {@link FreeDrawButton},
+ * {@link ColorMatcher}, {@link ColorPicker}, {@link EraserButton}, {@link FreeDrawButton},
  * {@link LineButton}, {@link NGonButton}, {@link RectangleButton}, {@link SnipButton},
  *  and {@link TextButton}. This class also maintains the relevant variables for these classes.
  * @author      Alec Hauck
@@ -46,8 +46,7 @@ public class Tools extends ToolBar {
     static private int nSides;
     
     /**
-     * The value of the {@link Boolean} which represents whether shapes should be
-     * filled.
+     * The {@link CheckBox} which, if checked, indicates shapes should be filled.
      */
     static private CheckBox setFill;
     
@@ -137,7 +136,8 @@ public class Tools extends ToolBar {
         /**
      *  Sets the {@link Color} representing the current stroke color and updates the color on the 
      * {@link ColorPicker}.
-     * @param color
+     * @param color The {@link Color} representing the current stroke color and updates the color on the 
+     * {@link ColorPicker}.
      */
     public static void setColor(Color color) {
         currentColor = color;
@@ -163,7 +163,8 @@ public class Tools extends ToolBar {
      /**
      *Sets the {@link Color} representing the current fill color and updates the 
      * {@link ColorPicker} for the fill color.
-     * @param color
+     * @param color The {@link Color} representing the current fill color and updates the 
+     * {@link ColorPicker} for the fill color.
      */
     public static void setFillColor(Color color) {
         currentFillColor = color;

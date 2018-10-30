@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package paint;
 
 import javafx.event.EventHandler;
@@ -15,22 +11,64 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
- *
+ * The RectangleButton class allows the user to draw a rectangle with opposite corners 
+ * in the mouse press and mouse release location. The rectangle will be filled with the 
+ * {@link Tools#currentFillColor} if {@link Tools#setFill} is checked. The outline of the rectangle is
+ * affected by {@link Tools#currentColor} and {@link Tools#drawWidth}.
  * @author ahauc
  */
 public class RectangleButton extends Button {
+    /**
+     * The {@link Canvas} on the top of the {@link StackPane} selected from {@link Layer#myCurrentLayer}.
+     */
     private static Canvas myCanvas;
+    
+    /**
+     * The {@link GraphicsContext} obtained from {@link myCanvas}.
+     */
     private static GraphicsContext gc;
+    
+    /**
+     * The {@link Layer} which is temporary and used to preview the drawing.
+     */
     private static Layer tempImageCanvas;
+    
+    /**
+     * The {@link Canvas} which is temporary and used to preview the drawing.
+     */
     private static Canvas tempCanvas;
+    
+    /**
+     * The {@link GraphicsContext} which is temporary and used to preview the drawing.
+     */
     private static GraphicsContext tempGC;
+    
+    /**
+     * The {@link double} representing the starting X coordinate on the {@link Canvas} 
+     * for the rectangle.
+     */
     private static double startX;
+    
+    /**
+     * The {@link double} representing the starting Y coordinate on the {@link Canvas} 
+     * for the rectangle.
+     */
     private static double startY;
+    
+    /**
+     * The {@link double} representing the ending X coordinate on the {@link Canvas} 
+     * for the rectangle.
+     */
     private static double endX;
+    
+    /**
+     * The {@link double} representing the ending Y coordinate on the {@link Canvas} 
+     * for the rectangle.
+     */
     private static double endY;
 
     /**
-     * Activates the {@link EventHandler}s for drawing rectangles on the {@link Layer#myCurrentLayer}.
+     * Class constructor.
      */
     public RectangleButton() {
         ImageView rectangleImage = new ImageView("resources/rectangle.png");
@@ -42,7 +80,7 @@ public class RectangleButton extends Button {
     }
 
     /**
-     *
+     * Activates the {@link EventHandler}s for drawing rectangles on the {@link Layer#myCurrentLayer}.
      */
     public static void enterDrawEnvironment() {
         Layer.setDrawEnvironment("rectangle");

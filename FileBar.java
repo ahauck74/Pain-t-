@@ -1,6 +1,4 @@
-/*
- * This class handles the file bar as well as saving and opening new images
- */
+
 package paint;
 
 import java.awt.image.BufferedImage;
@@ -26,27 +24,44 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 /**
- *
+ * The FileBar class extends {@link Menu} to display {@link MenuItem}s for the 
+ * following actions: make new file, make new {@link Layer}, open file, save file,
+ * save as, undo, and redo.
  * @author ahauc
  */
 public class FileBar extends Menu {
 
+    /**
+     * The {@link Pane} used for storing the drawing {@link Canvas}es.
+     */
     private static Pane imagePane;
+    
+    /**
+     * A pointer to {@link Paint#primaryStage}. 
+     */
     private static Stage stage;
+    
+    /**
+     * The current {@link File} that is opened.
+     */
     private static File file;
+    
+    /**
+     * A {@link FileChooser}.
+     */
     private static FileChooser fileChooser;
 
     /**
-     *
-     * @param pane
-     * @param stage
+     * Class Constructor.
+     * @param pane The {@link Pane} used for storing the drawing {@link Canvas}es.
+     * @param stage A pointer to {@link Paint#primaryStage}. 
      */
     public FileBar(Pane pane, Stage stage) {
         this.setText("File");
         FileBar.imagePane = pane;
+        FileBar.stage = stage;
         MenuItem makeNew = new MenuItem("_New");
         MenuItem newLayer = new MenuItem("New Layer");
-
         MenuItem open = new MenuItem("_Open");
         MenuItem save = new MenuItem("_Save");
         MenuItem saveAs = new MenuItem("Save As");
@@ -63,9 +78,8 @@ public class FileBar extends Menu {
         saveAs.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
         undo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN));
         redo.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN));
-
-        FileBar.stage = stage;
-
+        
+        //MenuItem actions
         makeNew.setOnAction(e -> Paint.attemptClose(true)); //This checks for unsaved progress before opening a new canvas
         newLayer.setOnAction(e -> LayerOrganizer.makeNewLayer());
         save.setOnAction(e -> saveToFile());
@@ -88,11 +102,10 @@ public class FileBar extends Menu {
         fileChooser.getExtensionFilters()
                 .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
     }
-
-    //Sets filepath to null so that when saving, it prompts for a new filepath
-
+    
     /**
-     *
+     *Sets {@link FileBar#file} to null before calling \{@link FileBar#saveToFile} so that the 
+     * {@link FileChooser} dialog is shown.
      */
     public static void saveAs() {
         file = null;
@@ -100,22 +113,20 @@ public class FileBar extends Menu {
     }
 
     /**
-     *
+     *Calls {@link FileBar#saveFile}, and if {@link FileBar#file} is null, the 
+     * {@link FileChooser} dialog is called.
      */
     public static void saveToFile() {
-        System.out.println("Saving...");
-
-        //Show save file dialog if file hasn't been saved yet
         if (file == null) {
             file = fileChooser.showSaveDialog(stage); //Returns null if the dialog is closed without saving
         }
         saveFile(file);
-
     }
 
     /**
-     *
-     * @param file
+     * Iterates through the {@link Layer}s in the {@link Paint#imagePane} and draws them
+     * in order to create a {@link Canvas} with the merged image to be saved.
+     * @param file The file to be saved.
      */
     public static void saveFile(File file) {
         Canvas saveCanvas = new Canvas(Layer.getCanvasWidth(), Layer.getCanvasHeight());
@@ -141,7 +152,8 @@ public class FileBar extends Menu {
     }
 
     /**
-     *
+     * Clears the {@link LayerOrganizer} of all {@link Layer}s and creates a new blank 
+     * layer.
      */
     public static void newBlank() {
         Layer myCanvas = new Layer();
@@ -152,11 +164,10 @@ public class FileBar extends Menu {
     }
 
     /**
-     *
+     * Clears the {@link LayerOrganizer} of all {@link Layer}s and creates a new  
+     * layer with the file selected from the {@link FileChooser}. 
      */
     public static void openFile() {
-        //Use a different file variable when opening to avoid defaulting to 
-        //overwriting the original file.
         File openFile = fileChooser.showOpenDialog(null);
         if (openFile == null) {
             return;
@@ -170,8 +181,8 @@ public class FileBar extends Menu {
     }
     
     /**
-     *
-     * @return
+     * Checks if {@link FileBar#file} is assigned a value.
+     * @return True if {@link FileBar#file} is null. False otherwise.
      */
     public static Boolean isNotSaved() {
         return (file == null);

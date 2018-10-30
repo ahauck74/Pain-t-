@@ -48,8 +48,7 @@ public class TextButton extends Button {
 
     /**
      *Called when the button is clicked, this assigns the mouse handlers to the current canvas 
-     * retrieved from {@link Layer.getCurrentCanvas}
-     * @see Layer.getCurrentCanvas
+     * retrieved from {@link Layer#getCurrentCanvas}.
      */
     public static void enterDrawEnvironment() {
         Layer.setDrawEnvironment("text");
