@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
  * when clicked. While in in the erase draw-environment, dragging the mouse on the bottom layer
  * of the canvas will draw {@link Color#WHITE} or {@link Color#TRANSPARENT} otherwise. Drawing transparently in 
  * this case will replace pixels with transparent ones.
- * @author ahauc
+ * @author Alec Hauck
  */
 public class EraserButton extends Button{
 

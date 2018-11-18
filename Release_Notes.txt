@@ -1,29 +1,25 @@
 Pain(t) Release Notes
 
-Week 1: 9/7/18
-  * Added a file dropdown bar in the menubar with options open, save, an 
-  * Added the ability to save the file. If the file does not already have a specified file path, a save as will be performed instead
-  * Added the ability to save as
-  * Added buttons for home and view in the menubar, these don't do anything yet
-  Issues
-  * When opening a file, the window does not scale to the file size
+Final Turn In: 
+    * Added Javadocs
+    * Fixed a bug involving fill colors not updating
+    * Renamed methods with vague titles
+
+Week 5: 10/1/18
+    * Added N-Gon
+    * Added text box 
+    * Added user input for font size 
+    * Added user input for font
 
 
-Week 2: 9/14/18
-  * The window now defaults to maximized upon opening with centered images
-  * Added the ability to choose colors from a color picker which implements tool tips on hover
-  * The user can now draw lines with the selected color that will be preview before being created
-  * Added a prompt to save any unsaved work when closing or opening
-  * Reworked and simplified the saving methods in FileBar.java
-  * Added keyboard shortcuts to the File options
+Week 4: 9/28/18 Canvas Layers?
+    * Added eraser button
+    * Added layering system
 
-TODO:
-  * Make GUIs for unsaved work prompts cleaner
-  * Choose a different exit condition for the line drawing environment. Currently 
-    it exits the environment after the first line is drawn such that in order to draw
-    a second line the line button must be clicked again (FIXED 9/21/18)
-  * Combine exit attempt and open new file attempt methods into one. Current implementation
-    if inefficient (FIXED 9/25/18)
+    Known Issues
+        * Adding a new layer while in the draw environment doesn't move the draw 
+          environment to the new layer (FIXED 10/1/18)
+
 
 Week 3: 9/21/18
   * Added buttons to draw rectangles and circles with optional fill
@@ -35,29 +31,29 @@ Week 3: 9/21/18
 
 TODO: 
   * Leave cut outline for the snip before the cut is dragged (FIXED 9/23/18)
-  * Create listener for the esc to exit any drawing environment
-  * Clean/organize the toolbar
+  * Clean/organize the toolbar (FIXED 10/30/18)
   * Fix undo to release changes haven't been made when reverting to original canvas (FIXED 9/23/18)
-  * Add user input for size of new canvas
 
 
-Week 4: 9/28/18 Canvas Layers?
-    * Added eraser button
-    * Added layering system
+Week 2: 9/14/18
+  * The window now defaults to maximized upon opening with centered images
+  * Added the ability to choose colors from a color picker which implements tool tips on hover
+  * The user can now draw lines with the selected color that will be preview before being created
+  * Added a prompt to save any unsaved work when closing or opening
+  * Reworked and simplified the saving methods in FileBar.java
+  * Added keyboard shortcuts to the File options
 
-    Known Issues
-        * Adding a new layer while in the draw environment doesn't move the draw 
-          environment to the new layer (FIXED 10/1/18)
-        
-Week 5: 10/1/18
-    * Added N-Gon
-    * Added text box 
-    * Added user input for font size 
-    * Added user input for font
+TODO:
+  * Choose a different exit condition for the line drawing environment. Currently 
+    it exits the environment after the first line is drawn such that in order to draw
+    a second line the line button must be clicked again (FIXED 9/21/18)
+  * Combine exit attempt and open new file attempt methods into one. Current implementation
+    if inefficient (FIXED 9/25/18)
 
-Week 6: 
-    TODO:
-        * Create interface class for drawing classes that use temporary canvases
-            - Upon mouse press, create call LayerOrganizer.addTempCanvas()
-            - Method then polmorphically calls method to set drag and release actions??
-            - 
+Week 1: 9/7/18
+  * Added a file dropdown bar in the menubar with options open, save, an 
+  * Added the ability to save the file. If the file does not already have a specified file path, a save as will be performed instead
+  * Added the ability to save as
+  * Added buttons for home and view in the menubar, these don't do anything yet
+  Issues
+  * When opening a file, the window does not scale to the file size

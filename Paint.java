@@ -84,7 +84,7 @@ public class Paint extends Application {
     }
 
     private static void saveAndClose(Stage unsavedWorkPrompt) {
-        FileBar.saveToFile();
+        FileBar.save();
         unsavedWorkPrompt.close();
     }
     

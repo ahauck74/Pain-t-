@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package paint;
 
 import java.nio.IntBuffer;
@@ -21,7 +17,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * The SnipButton class allows the user to select a rectangular set of pixels from 
+ * the {@link Canvas} of {@link Layer#myCurrentLayer} to drag and move to a new location on the 
+ * {@link Canvas}. This leaves behind the background {@link Color}: {@link Color#WHITE} for 
+ * the bottom {@link Canvas} and {@link Color#TRANSPARENT} for upper canvases.
  * @author ahauc
  */
 public class SnipButton extends Button {
@@ -46,7 +45,7 @@ public class SnipButton extends Button {
     private static WritablePixelFormat<IntBuffer> format;
 
     /**
-     *
+     * Class constructor.
      */
     public SnipButton() {
         ImageView scissorsImage = new ImageView("resources/scissors.png");

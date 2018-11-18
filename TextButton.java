@@ -15,11 +15,8 @@ import javafx.scene.paint.Color;
 /**
  * The TextButton class extends {@link Button} which controls the flow of {@link Canvas}
  * Event Handlers to add text and manipulate text on the canvas.
- * @see Button
- * @see Canvas
  * @author      Alec Hauck
- * @version     %I%, %G%
- * @since       1.0
+
  */
 public class TextButton extends Button {
     

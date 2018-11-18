@@ -82,7 +82,7 @@ public class FileBar extends Menu {
         //MenuItem actions
         makeNew.setOnAction(e -> Paint.attemptClose(true)); //This checks for unsaved progress before opening a new canvas
         newLayer.setOnAction(e -> LayerOrganizer.makeNewLayer());
-        save.setOnAction(e -> saveToFile());
+        save.setOnAction(e -> save());
         saveAs.setOnAction(e -> saveAs());
         open.setOnAction(e -> Paint.attemptClose(false));
         undo.setOnAction(e -> Layer.undo());
@@ -104,19 +104,19 @@ public class FileBar extends Menu {
     }
     
     /**
-     *Sets {@link FileBar#file} to null before calling \{@link FileBar#saveToFile} so that the 
+     *Sets {@link FileBar#file} to null before calling \{@link FileBar#save} so that the 
      * {@link FileChooser} dialog is shown.
      */
     public static void saveAs() {
         file = null;
-        saveToFile();
+        save();
     }
 
     /**
      *Calls {@link FileBar#saveFile}, and if {@link FileBar#file} is null, the 
      * {@link FileChooser} dialog is called.
      */
-    public static void saveToFile() {
+    public static void save() {
         if (file == null) {
             file = fileChooser.showSaveDialog(stage); //Returns null if the dialog is closed without saving
         }

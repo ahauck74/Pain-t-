@@ -16,7 +16,7 @@ import javafx.scene.input.MouseEvent;
  * The LineButton class allows the user to draw a line from a point (x1, y1) to (x2, y2) 
  * from mouse input. The format of the line is affected by {@link Tools#drawWidth} and
  * {@link Tools#currentColor}.
- * @author ahauc
+ * @author Alec Hauck
  */
 public class LineButton extends Button {
 

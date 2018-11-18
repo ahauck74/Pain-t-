@@ -210,7 +210,7 @@ public class Layer extends Button implements Comparable {
 
     /**
      * This method moves the mouse handlers to the current layer. This is used when a new 
-     * current layer is selected or created while in a draw environment.
+     * current layer is selected or created while in a draw environment. 
      */
     public static void resetMouseHandlers() {
         switch (drawEnvironment) {

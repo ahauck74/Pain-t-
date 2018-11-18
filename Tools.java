@@ -16,8 +16,7 @@ import javafx.scene.text.Font;
  * {@link LineButton}, {@link NGonButton}, {@link RectangleButton}, {@link SnipButton},
  *  and {@link TextButton}. This class also maintains the relevant variables for these classes.
  * @author      Alec Hauck
- * @version     %I%, %G%
- * @since       1.0
+
  */
 public class Tools extends ToolBar {
 
@@ -99,6 +98,7 @@ public class Tools extends ToolBar {
         //Editable ComboBox for picking the number of sides of the NGon
         sidesPicker = new ComboBox();
         sidesPicker.setEditable(true);
+        sidesPicker.setPrefWidth(100);
         sidesPicker.getItems().addAll("3", "5", "6", "7", "8", "10", "12", "20", "100");
         sidesPicker.setPromptText("Sides");
         sidesPicker.setOnAction(e -> pickN());
@@ -113,12 +113,14 @@ public class Tools extends ToolBar {
         //ComboBox for picking font used in TextButton
         List<String> families = Font.getFamilies();
         fontPicker = new ComboBox<>(FXCollections.observableArrayList(javafx.scene.text.Font.getFamilies()));
-        fontPicker.setMaxWidth(Double.MAX_VALUE);
+        fontPicker.setPrefWidth(250);
+        fontPicker.setPromptText("Font");
         fontPicker.setOnAction(e -> pickFont());
         
         //Editable ComboBox for the picking the font size of the used in TextButton
         fontSizePicker = new ComboBox();
         fontSizePicker.setEditable(true);
+        fontSizePicker.setPrefWidth(125);
         fontSizePicker.getItems().addAll("1", "2", "4", "8", "12", "16", "20", "28", "36", "48", "64");
         fontSizePicker.setPromptText("Font Size");
         fontSizePicker.setOnAction(e -> pickFontSize());
@@ -126,8 +128,8 @@ public class Tools extends ToolBar {
           
         
         this.getItems().addAll(lineButton,circleButton, rectangleButton, nGonButton, sidesPicker,  setFill, 
-                drawButton, eraserButton,  snipButton, textButton, colorMatchButton, colorPicker, 
-                colorFillPicker, widthPicker, fontPicker ,fontSizePicker);
+                drawButton, eraserButton,  snipButton, colorMatchButton, colorPicker, 
+                colorFillPicker, widthPicker, textButton, fontSizePicker, fontPicker);
 
     }
 
@@ -251,6 +253,4 @@ public class Tools extends ToolBar {
         
         nSides =  Integer.parseInt(sidesPicker.getValue());
     }
-
-    
 }

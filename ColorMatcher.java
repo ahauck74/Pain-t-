@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 /**
  * The ColorMatcher class allows the user to select {@link Tools#currentColor} by clicking on a pixel
  * from the {@link Layer#myCurrentLayer}. 
- * @author ahauc
+ * @author Alec Hauck
  */
 public class ColorMatcher extends Button{
     

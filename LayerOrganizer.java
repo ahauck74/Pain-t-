@@ -24,10 +24,7 @@ import javafx.scene.layout.StackPane;
  * to the StackPane with proper relation to the other Layers. This class also
  * ensures that the current Layer, {@link Layer#myCurrentLayer}, is always at the top
  * of the StackPane.
- *
- * @author Alec Hauck
- * @version %I%, %G%
- * @since 1.0
+]* @author Alec Hauck
  */
 public class LayerOrganizer extends ListView {
 

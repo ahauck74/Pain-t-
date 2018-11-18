@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
  * The NGonButton class allows the user to draw an N-sided regular polygon. The
  * N-gon is affected by {@link Tools#nSides}, {@link  Tools#drawWidth}, and
  * {@link Tools#currentColor}.
- * @author ahauc
+ * @author Alec Hauck
  */
 public class NGonButton extends Button {
 
@@ -32,7 +32,6 @@ public class NGonButton extends Button {
      * The {@link GraphicsContext} for {@link myCanvas}.
      */
     private static GraphicsContext gc;
-    
     
       
     /**
