@@ -70,14 +70,16 @@ public class CircleButton extends Button{
      * for the circle.
      */
     private static double endY;
+    
+    private static final int BUTTON_IMAGE_SIZE=20;
 
     /**
      * Class constructor.
      */
     public CircleButton() {
         ImageView circleImage = new ImageView("resources/circle.png");
-        circleImage.setFitHeight(20);
-        circleImage.setFitWidth(20);
+        circleImage.setFitHeight(BUTTON_IMAGE_SIZE);
+        circleImage.setFitWidth(BUTTON_IMAGE_SIZE);
         this.setGraphic(circleImage);
         setTooltip(new Tooltip("Draw Circle"));
         this.setOnAction(e -> enterDrawEnvironment());

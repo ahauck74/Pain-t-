@@ -66,14 +66,16 @@ public class RectangleButton extends Button {
      * for the rectangle.
      */
     private static double endY;
+    private static final int BUTTON_IMAGE_SIZE=20;
+
 
     /**
      * Class constructor.
      */
     public RectangleButton() {
         ImageView rectangleImage = new ImageView("resources/rectangle.png");
-        rectangleImage.setFitHeight(20);
-        rectangleImage.setFitWidth(20);
+        rectangleImage.setFitHeight(BUTTON_IMAGE_SIZE);
+        rectangleImage.setFitWidth(BUTTON_IMAGE_SIZE);
         this.setGraphic(rectangleImage);
         setTooltip(new Tooltip("Draw Rectangle"));
         this.setOnAction(e -> this.enterDrawEnvironment());

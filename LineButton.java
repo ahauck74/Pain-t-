@@ -68,6 +68,8 @@ public class LineButton extends Button {
      * for the line.
      */
     private static double endY;
+    
+    private static final int BUTTON_IMAGE_SIZE=20;
 
     /**
      * Class constructor.
@@ -75,8 +77,8 @@ public class LineButton extends Button {
     public LineButton() {
         Layer.setDrawEnvironment("line");
         ImageView lineImage = new ImageView("resources/line.png");
-        lineImage.setFitHeight(20);
-        lineImage.setFitWidth(20);
+        lineImage.setFitHeight(BUTTON_IMAGE_SIZE);
+        lineImage.setFitWidth(BUTTON_IMAGE_SIZE);
         this.setGraphic(lineImage);
         setTooltip(new Tooltip("Draw Line"));
         this.setOnAction(e -> this.enterDrawEnvironment());

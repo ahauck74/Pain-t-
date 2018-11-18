@@ -77,6 +77,8 @@ public class NGonButton extends Button {
      * The {@link int} representing the number of sides of the N-Gon.
      */
     private static int n;
+    private static final int BUTTON_IMAGE_SIZE=20;
+
 
     /**
      * Class constructor.

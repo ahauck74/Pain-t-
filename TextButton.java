@@ -33,6 +33,9 @@ public class TextButton extends Button {
     private static String text;
     private static int fontSize;
     private static TextArea textBox;
+    private static int defaultTextBoxWidth;
+    private static int defaultTextBoxHeight;
+    
 
     /**
      *Default constructor.
@@ -41,6 +44,11 @@ public class TextButton extends Button {
         this.setText("Text");
         setTooltip(new Tooltip("Draw Text"));
         this.setOnAction(e -> this.enterDrawEnvironment());
+        defaultTextBoxWidth = 50;
+        width = defaultTextBoxWidth;
+        defaultTextBoxHeight = 15;
+        height = defaultTextBoxHeight;
+        
     }
 
     /**
@@ -76,10 +84,8 @@ public class TextButton extends Button {
             tempGC.setLineDashes(5);
             tempGC.setLineWidth(1);//Takes type double as its argument
             //Using the mininmum x and y coordinates, it dynamically finds the upper left corner
-            width = 50;
-            height = 15;
-            textBox.setMaxWidth(width);
-            textBox.setMaxHeight(height);
+            textBox.setMaxWidth(defaultTextBoxWidth);
+            textBox.setMaxHeight(defaultTextBoxHeight);
 
             fontSize = Tools.getCurrentFontSize();
             tempGC.strokeRect(startX, startY, width, height);

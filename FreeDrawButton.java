@@ -20,15 +20,17 @@ public class FreeDrawButton extends Button {
 
     private static Canvas myCanvas;
     private static GraphicsContext gc;
-    private static ImageView drawImage;
+    private static ImageView drawImage; 
+    private static final int BUTTON_IMAGE_SIZE=20;
+
 
     /**
      * Default constructor.
      */
     public FreeDrawButton() {
         drawImage = new ImageView("resources/pencil.png");
-        drawImage.setFitHeight(20);
-        drawImage.setFitWidth(20);
+        drawImage.setFitHeight(BUTTON_IMAGE_SIZE);
+        drawImage.setFitWidth(BUTTON_IMAGE_SIZE);
         this.setGraphic(drawImage);
         setTooltip(new Tooltip("Free Draw"));
         this.setOnAction(e -> enterDrawEnvironment());

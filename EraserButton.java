@@ -39,14 +39,16 @@ public class EraserButton extends Button{
      * The {@link double} representing the width for the eraser.
      */
     private static double width;
+    
+    private static final int BUTTON_IMAGE_SIZE=20;
 
     /**
      * Default constructor. 
      */
     public EraserButton() {
         ImageView eraserImage = new ImageView("resources/eraser.png");
-        eraserImage.setFitHeight(20);
-        eraserImage.setFitWidth(20);
+        eraserImage.setFitHeight(BUTTON_IMAGE_SIZE);
+        eraserImage.setFitWidth(BUTTON_IMAGE_SIZE);
         this.setGraphic(eraserImage);
         setTooltip(new Tooltip("Eraser"));
         this.setOnAction(e -> enterDrawEnvironment());
