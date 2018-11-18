@@ -1,6 +1,5 @@
 package paint;
 
-import java.util.Collection;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -13,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -42,6 +42,10 @@ public class Paint extends Application {
      * The {@link Stage} is the primary window for the application.
      */
     private static Stage primaryStage;
+    
+    private static final int WARNING_PANE_SPAWN_X = 300;
+    private static final int WARNING_PANE_SPAWN_Y = 150;
+    
 
     @Override
     public void start(Stage primaryStage) {
@@ -122,18 +126,21 @@ public class Paint extends Application {
         // choosing to save changes.
         if ((Layer.hasUnsavedProgress() || FileBar.isNotSaved()) && !(!Layer.hasUnsavedProgress() && FileBar.isNotSaved())) {
 
-            BorderPane warningPane = new BorderPane();
+            FlowPane warningPane = new FlowPane();
+            warningPane.setAlignment( Pos.CENTER);
+            warningPane.setVgap(20);
             HBox buttons = new HBox();
+            buttons.setAlignment(Pos.CENTER);
             Label warningMessage = new Label("Do you want to save your progress?");
-            warningPane.setTop(warningMessage);
+            
             Button saveChanges = new Button("Save");
             Button close = new Button("Don't Save");
             Button cancel = new Button("Cancel");
 
             buttons.getChildren().addAll(saveChanges, close, cancel);
-            warningPane.setCenter(buttons);
-
-            Scene secondScene = new Scene(warningPane, 250, 100);
+            warningPane.getChildren().addAll(warningMessage, buttons);
+            
+            Scene secondScene = new Scene(warningPane, WARNING_PANE_SPAWN_X, WARNING_PANE_SPAWN_Y);
 
             // New window (Stage)
             Stage newWindow = new Stage();
@@ -146,8 +153,8 @@ public class Paint extends Application {
             cancel.setOnAction(e -> cancel(newWindow));
 
             // Set position of second window, relative to primary window.
-            newWindow.setX(primaryStage.getX() + 200);
-            newWindow.setY(primaryStage.getY() + 100);
+            newWindow.setX(primaryStage.getX() + WARNING_PANE_SPAWN_X);
+            newWindow.setY(primaryStage.getY() + WARNING_PANE_SPAWN_Y);
             newWindow.show();
         } else {
             noSaveNeeded(makeNew);
